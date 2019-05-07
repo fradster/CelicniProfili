@@ -281,11 +281,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Users\About.cshtml" />
     <Content Include="Views\Users\Activation.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\DeleteUser.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Users\SignUpstep2.cshtml" />
     <Content Include="Views\Users\UserData.cshtml" />
