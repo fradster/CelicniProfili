@@ -3,8 +3,9 @@ Projektni zadatak je formiranje baze čeličnih profila korišćenih u građevin
 
 Scenario upotrebe je sledeći: korisnik se loguje na svoj nalog, nakon čega je upućen na korisnički panel gde može da odabere da menja svoje podatke (šifru, email) ili da pristupi bazi čeličnih profila. Ako ima nivo administratora, može da pristupi i listi svih korisnika, gde može da menja njihove podatke ili da ih briše. Novi korisnici mogu da otvore nov nalog, uz aktivaciju naloga preko e-mail poruke koju će sistem poslati.
 
-Baza podataka: Backup baze se nalazi u CelicniProfili/AppData/Baza folderu. Tu je takođe i sql script formiranje.sql preko koga je formirana baza (nije predviđen da se startuje u "1-nom cugu"). Baz ase sastoji iz sledećih tabela:
-	- Users : Tabela korsnika sa njihovim podacima (user name, password, e-mail, level (User ili admin))
+Baza podataka: Backup baze se nalazi u CelicniProfili/AppData/Baza folderu. Tu je takođe i sql script formiranje.sql preko koga je formirana baza (nije predviđen da se startuje u "1-nom cugu"). Baza se sastoji iz sledećih tabela:
+
+	- Users : Tabela korsnika sa njihovim podacima (user name, password, e-mail, level (User ili admin))	
 	- UserActivation : tabela koja čuva privremene podatke korisnika koji su otvorili nalog ali ga nisu aktivirali. Sadrži ID korisnika i generisani GUID kod.
 	- profil : profili definisani preko kombinacije nosećeg monobloka i ojačanja, sadri podatke o geometrijksim koordinatama eventualnog novog naknadnog ojačanja.
 	- tip profila : za zadati monoblok definiše tehnologiju valjanja i oznaku grupe profila
@@ -16,4 +17,10 @@ Baza podataka: Backup baze se nalazi u CelicniProfili/AppData/Baza folderu. Tu j
 	- [ojačanje_opis] : dimenzije ojačavajućeg lima
 	- [Profil_I-karakteristike] : mehaničke karakteristike profila
 
-Korišćene tehnlogije i bibioteke: .NET ASP MVC + Web API, SQL, Entity framework, MailKit, SVG
+Korišćene tehnlogije i bibioteke:
+	
+	-.NET ASP MVC + Web API
+	- SQL
+	- Entity framework
+	- MailKit
+	-SVG
