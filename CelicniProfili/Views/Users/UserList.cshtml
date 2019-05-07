@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CelicniProfili.Models.Users>
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width" />
+		<title>UserList</title>
+	</head>
+
+	<body>
+
+		<div class="jumbotron">
+			<h2>Lista korisnika</h2>
+			<p class="lead">@ViewBag.Status : @ViewBag.User</p>
+		</div>
+
+		@if (@ViewBag.poruka != null) {
+
+		<div style="border: 1px solid red">
+			@ViewBag.poruka
+		</div>
+		}
+
+		<table class="table table-hover table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Name)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.pass)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.level)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.email)
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				@foreach (var item in Model) {
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.pass)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.level)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.email)
+					</td>
+					<td>
+						@Html.ActionLink("Izmeni", "UserData", new { id = item.id }, new { @class = "btn btn-info btn-sm" }) 
+						@Html.ActionLink("Izbriši", "DeleteUser", new { id = item.id }, new { @class = "btn btn-info btn-sm" })
+					</td>
+				</tr>
+				}
+			</tbody>
+
+			<tfoot>
+				<tr>
+					<td style="border-left: none; border-right: none;">
+						@Html.ActionLink("Back", "UserPanel", new { area = "" }, new { @class = "btn btn-info" })
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</body>
+</html>

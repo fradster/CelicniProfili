@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ČeličniProfiliModelStoreContainer" CdmEntityContainer="ČeličniProfiliEntities">
+    <EntitySetMapping Name="I_geometrija">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.I_geometrija">
+        <MappingFragment StoreEntitySet="I-geometrija">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="b" ColumnName="b" />
+          <ScalarProperty Name="h" ColumnName="h" />
+          <ScalarProperty Name="s" ColumnName="s" />
+          <ScalarProperty Name="t" ColumnName="t" />
+          <ScalarProperty Name="r1" ColumnName="r1" />
+          <ScalarProperty Name="r2" ColumnName="r2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="I_karakteristike">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.I_karakteristike">
+        <MappingFragment StoreEntitySet="I-karakteristike">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="A" ColumnName="A" />
+          <ScalarProperty Name="G" ColumnName="G" />
+          <ScalarProperty Name="Ix" ColumnName="Ix" />
+          <ScalarProperty Name="Wx" ColumnName="Wx" />
+          <ScalarProperty Name="ix_jez" ColumnName="ix_jez" />
+          <ScalarProperty Name="Iy" ColumnName="Iy" />
+          <ScalarProperty Name="Wy" ColumnName="Wy" />
+          <ScalarProperty Name="iy_jez" ColumnName="iy_jez" />
+          <ScalarProperty Name="Sx" ColumnName="Sx" />
+          <ScalarProperty Name="s_x" ColumnName="s_x" />
+          <ScalarProperty Name="I_tor" ColumnName="I_tor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mon_opis">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.mon_opis">
+        <MappingFragment StoreEntitySet="mon_opis">
+          <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
+          <ScalarProperty Name="No_node" ColumnName="No_node" />
+          <ScalarProperty Name="Node_x" ColumnName="Node_x" />
+          <ScalarProperty Name="Node_y" ColumnName="Node_y" />
+          <ScalarProperty Name="index_pr" ColumnName="index_pr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Monoblok">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
+        <MappingFragment StoreEntitySet="Monoblok">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="monoblok_pozicije_ojačanja">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.monoblok_pozicije_ojačanja">
+        <MappingFragment StoreEntitySet="monoblok_pozicije_ojačanja">
+          <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
+          <ScalarProperty Name="X_pos" ColumnName="X_pos" />
+          <ScalarProperty Name="Y_pos" ColumnName="Y_pos" />
+          <ScalarProperty Name="br_segment" ColumnName="br_segment" />
+          <ScalarProperty Name="pravac" ColumnName="pravac" />
+          <ScalarProperty Name="index_pr" ColumnName="index_pr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ojačanje_opis">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.ojačanje_opis">
+        <MappingFragment StoreEntitySet="ojačanje_opis">
+          <ScalarProperty Name="index_pr" ColumnName="index_pr" />
+          <ScalarProperty Name="Id_ojač" ColumnName="Id_ojač" />
+          <ScalarProperty Name="b" ColumnName="b" />
+          <ScalarProperty Name="h" ColumnName="h" />
+          <ScalarProperty Name="pol_x" ColumnName="pol_x" />
+          <ScalarProperty Name="pol_y" ColumnName="pol_y" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="profil">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.profil">
+        <MappingFragment StoreEntitySet="profil">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_monoblok" ColumnName="ID_monoblok" />
+          <ScalarProperty Name="ID_ojačanje" ColumnName="ID_ojačanje" />
+          <ScalarProperty Name="pos_x" ColumnName="pos_x" />
+          <ScalarProperty Name="pos_y" ColumnName="pos_y" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profil_I_karakteristike">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.Profil_I_karakteristike">
+        <MappingFragment StoreEntitySet="Profil_I-karakteristike">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="A" ColumnName="A" />
+          <ScalarProperty Name="G" ColumnName="G" />
+          <ScalarProperty Name="Ix" ColumnName="Ix" />
+          <ScalarProperty Name="Wx" ColumnName="Wx" />
+          <ScalarProperty Name="ix_jez" ColumnName="ix_jez" />
+          <ScalarProperty Name="Iy" ColumnName="Iy" />
+          <ScalarProperty Name="Wy" ColumnName="Wy" />
+          <ScalarProperty Name="iy_jez" ColumnName="iy_jez" />
+          <ScalarProperty Name="Sx" ColumnName="Sx" />
+          <ScalarProperty Name="s_x" ColumnName="s_x" />
+          <ScalarProperty Name="I_tor" ColumnName="I_tor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="standard">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.standard">
+        <MappingFragment StoreEntitySet="standard">
+          <ScalarProperty Name="Id_standard" ColumnName="Id_standard" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="šifra" ColumnName="šifra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tip_profila">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_profila">
+        <MappingFragment StoreEntitySet="tip profila">
+          <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
+          <ScalarProperty Name="tehnologija" ColumnName="tehnologija" />
+          <ScalarProperty Name="oznaka" ColumnName="oznaka" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserActivation">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.UserActivation">
+        <MappingFragment StoreEntitySet="UserActivation">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="level" ColumnName="level" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

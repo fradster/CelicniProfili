@@ -1,0 +1,27 @@
+﻿@model CelicniProfili.Models.Users
+
+@{
+	ViewBag.Title = "Delete";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Obriši Korisnika</h2>
+
+@if (@ViewBag.poruka != null) {
+
+	<div style="border: 1px solid red">
+		@ViewBag.poruka
+	</div>
+}
+<div>
+
+	@using (Html.BeginForm("DeleteUser", "Users", FormMethod.Post)) {
+		@Html.AntiForgeryToken()
+
+		<div class="form-actions no-color">
+			<input type="submit" value="Izbriši" class = "btn btn-info" />
+			@Html.ActionLink("Cancel", "UserList", "Users", new { poruka2= "User nije obrisan"}, new {@class = "btn btn-info" })
+			@*@Html.ActionLink("Izbriši", "UserList", "Users", new { poruka2 = "User nije obrisan" }, new { @class = "btn btn-info" })*@
+		</div>
+	}
+</div>

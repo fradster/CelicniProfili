@@ -1,0 +1,21 @@
+﻿
+@{
+	ViewBag.Title = "Activation";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Activation</h2>
+
+@if (@ViewBag.poruka != null) {
+
+<div style="border: 1px solid red">
+	@ViewBag.poruka
+</div>
+}
+
+@{ 
+	if (ViewBag.panelFlag) {
+		@Html.ActionLink("Korisnički panel", "UserPanel", "Users", new { area = "" }, new { @class = "btn btn-info" });
+		}
+	}
+

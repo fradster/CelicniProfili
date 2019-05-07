@@ -1,0 +1,69 @@
+﻿@model CelicniProfili.Models.Users
+
+@{
+	string Akcija = ViewBag.Action;
+	ViewBag.Title = Akcija;
+
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Akcija</h2>
+@using (Html.BeginForm(Akcija, "Users", FormMethod.Post)) {
+
+	<fieldset>
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary(true)
+	
+		@if (@ViewBag.poruka != null) {
+
+			<div style="border: 1px solid red">
+				@ViewBag.poruka
+			</div>
+		}
+	
+		<table>
+			<tr>
+				<td>@Html.LabelFor(a => a.Name )</td>
+				<td>@Html.TextBoxFor(a => a.Name, new { @Value = String.Empty })</td>
+				<td>@Html.ValidationMessageFor(a => a.Name)</td>
+			</tr>
+
+			@if (Akcija.ToLower().Equals("signup")) {
+				<tr>
+					<td>@Html.LabelFor(a => a.email)</td>
+					<td>@Html.TextBoxFor(a => a.email, new { @Value = String.Empty, type = "email", placeholder = "example@mail.ru" })</td>
+					<td>@Html.ValidationMessageFor(a => a.email)</td>
+				</tr>
+			}
+			
+			@if (Akcija.ToLower().Equals("login") || Akcija.ToLower().Equals("signup")) {
+				<tr>
+					<td>@Html.LabelFor(a => a.pass)</td>
+					<td>@Html.PasswordFor(a => a.pass, new { @Value = String.Empty })</td>
+					<td>@Html.ValidationMessageFor(a => a.pass)</td>
+				</tr>
+			}
+
+			<tr>
+				<td></td>
+				<td >
+					<input type="submit" value= @Akcija class = "btn btn-info" />
+				</td>
+				<td></td>
+				<td>
+					@{ 
+						if (Akcija.Equals ("Login")) {
+							@Html.ActionLink("Zaboravljen password?", "ResetPass", "Users", new { area = "" }, new { @class = "btn btn-info" });
+						}
+					}
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+}
+
+
+  
+
+
+

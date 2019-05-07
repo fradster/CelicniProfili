@@ -1,0 +1,30 @@
+﻿@model CelicniProfili.Models.Users
+
+@{
+    ViewBag.Title = "Korisnički Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+	<h2>Korisnički Panel</h2>
+	<p class="lead">@ViewBag.Status : @ViewBag.User</p>
+</div>
+
+
+	<div style="border: 1px solid red">
+		@ViewBag.poruka
+	</div>
+
+<div class="row">
+	<div class="col-md-2">
+		<p>
+			<a class="btn btn-info" href='@Url.Action("UserData", "Users", new {id= Convert.ToInt16(Session["UserId"])})'>Moj nalog</a>
+		</p>
+		
+			@if (ViewBag.Status.ToLower() == "admin") {
+				<p>
+					<a class="btn btn-info" href='@Url.Action("UserList", "Users")'>Edit liste korisnika</a>
+				</p>
+			}
+	</div>
+</div>

@@ -1,0 +1,676 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ČeličniProfiliModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="I-geometrija">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="b" Type="float" Nullable="false" />
+          <Property Name="h" Type="float" Nullable="false" />
+          <Property Name="s" Type="float" Nullable="false" />
+          <Property Name="t" Type="float" Nullable="false" />
+          <Property Name="r1" Type="float" />
+          <Property Name="r2" Type="float" />
+        </EntityType>
+        <EntityType Name="I-karakteristike">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="A" Type="float" Nullable="false" />
+          <Property Name="G" Type="float" Nullable="false" />
+          <Property Name="Ix" Type="float" Nullable="false" />
+          <Property Name="Wx" Type="float" Nullable="false" />
+          <Property Name="ix_jez" Type="float" Nullable="false" />
+          <Property Name="Iy" Type="float" Nullable="false" />
+          <Property Name="Wy" Type="float" Nullable="false" />
+          <Property Name="iy_jez" Type="float" Nullable="false" />
+          <Property Name="Sx" Type="float" Nullable="false" />
+          <Property Name="s_x" Type="float" Nullable="false" />
+          <Property Name="I_tor" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mon_opis">
+          <Key>
+            <PropertyRef Name="index_pr" />
+          </Key>
+          <Property Name="ID_mono" Type="int" Nullable="false" />
+          <Property Name="No_node" Type="int" Nullable="false" />
+          <Property Name="Node_x" Type="float" Nullable="false" />
+          <Property Name="Node_y" Type="float" Nullable="false" />
+          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Monoblok">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID_standard" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ID_tip" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="monoblok_pozicije_ojačanja">
+          <Key>
+            <PropertyRef Name="index_pr" />
+          </Key>
+          <Property Name="ID_mono" Type="int" Nullable="false" />
+          <Property Name="X_pos" Type="float" Nullable="false" />
+          <Property Name="Y_pos" Type="float" Nullable="false" />
+          <Property Name="br_segment" Type="int" Nullable="false" />
+          <Property Name="pravac" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ojačanje_opis">
+          <Key>
+            <PropertyRef Name="index_pr" />
+          </Key>
+          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_ojač" Type="int" Nullable="false" />
+          <Property Name="b" Type="float" Nullable="false" />
+          <Property Name="h" Type="float" Nullable="false" />
+          <Property Name="pol_x" Type="float" Nullable="false" />
+          <Property Name="pol_y" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="profil">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID_monoblok" Type="int" Nullable="false" />
+          <Property Name="ID_ojačanje" Type="int" Nullable="false" />
+          <Property Name="pos_x" Type="float" />
+          <Property Name="pos_y" Type="float" />
+        </EntityType>
+        <EntityType Name="Profil_I-karakteristike">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="A" Type="float" Nullable="false" />
+          <Property Name="G" Type="float" Nullable="false" />
+          <Property Name="Ix" Type="float" Nullable="false" />
+          <Property Name="Wx" Type="float" Nullable="false" />
+          <Property Name="ix_jez" Type="float" Nullable="false" />
+          <Property Name="Iy" Type="float" Nullable="false" />
+          <Property Name="Wy" Type="float" Nullable="false" />
+          <Property Name="iy_jez" Type="float" Nullable="false" />
+          <Property Name="Sx" Type="float" Nullable="false" />
+          <Property Name="s_x" Type="float" Nullable="false" />
+          <Property Name="I_tor" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="standard">
+          <Key>
+            <PropertyRef Name="Id_standard" />
+          </Key>
+          <Property Name="Id_standard" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="šifra" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tip profila">
+          <Key>
+            <PropertyRef Name="ID_tip" />
+          </Key>
+          <Property Name="ID_tip" Type="int" Nullable="false" />
+          <Property Name="tehnologija" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="oznaka" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserActivation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="pass" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="level" Type="smallint" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="320" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Monoblok__ID__4222D4EF">
+          <End Role="I-geometrija" Type="Self.I-geometrija" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="I-geometrija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID__44FF419A">
+          <End Role="I-karakteristike" Type="Self.I-karakteristike" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="I-karakteristike">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID_sta__3F466844">
+          <End Role="standard" Type="Self.standard" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="standard">
+              <PropertyRef Name="Id_standard" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID_standard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID_tip__3C69FB99">
+          <End Role="tip profila" Type="Self.tip profila" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tip profila">
+              <PropertyRef Name="ID_tip" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID_tip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profil__ID__4D94879B">
+          <End Role="Profil_I-karakteristike" Type="Self.Profil_I-karakteristike" Multiplicity="1" />
+          <End Role="profil" Type="Self.profil" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Profil_I-karakteristike">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="profil">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profil__ID_monob__398D8EEE">
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="1" />
+          <End Role="profil" Type="Self.profil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Monoblok">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="profil">
+              <PropertyRef Name="ID_monoblok" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ČeličniProfiliModelStoreContainer">
+          <EntitySet Name="I-geometrija" EntityType="Self.I-geometrija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I-karakteristike" EntityType="Self.I-karakteristike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mon_opis" EntityType="Self.mon_opis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Monoblok" EntityType="Self.Monoblok" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="monoblok_pozicije_ojačanja" EntityType="Self.monoblok_pozicije_ojačanja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ojačanje_opis" EntityType="Self.ojačanje_opis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profil" EntityType="Self.profil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profil_I-karakteristike" EntityType="Self.Profil_I-karakteristike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="standard" EntityType="Self.standard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tip profila" EntityType="Self.tip profila" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserActivation" EntityType="Self.UserActivation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Monoblok__ID__4222D4EF" Association="Self.FK__Monoblok__ID__4222D4EF">
+            <End Role="I-geometrija" EntitySet="I-geometrija" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID__44FF419A" Association="Self.FK__Monoblok__ID__44FF419A">
+            <End Role="I-karakteristike" EntitySet="I-karakteristike" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID_sta__3F466844" Association="Self.FK__Monoblok__ID_sta__3F466844">
+            <End Role="standard" EntitySet="standard" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID_tip__3C69FB99" Association="Self.FK__Monoblok__ID_tip__3C69FB99">
+            <End Role="tip profila" EntitySet="tip profila" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profil__ID__4D94879B" Association="Self.FK__profil__ID__4D94879B">
+            <End Role="Profil_I-karakteristike" EntitySet="Profil_I-karakteristike" />
+            <End Role="profil" EntitySet="profil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profil__ID_monob__398D8EEE" Association="Self.FK__profil__ID_monob__398D8EEE">
+            <End Role="Monoblok" EntitySet="Monoblok" />
+            <End Role="profil" EntitySet="profil" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ČeličniProfiliModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="I_geometrija">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="b" Type="Double" Nullable="false" />
+          <Property Name="h" Type="Double" Nullable="false" />
+          <Property Name="s" Type="Double" Nullable="false" />
+          <Property Name="t" Type="Double" Nullable="false" />
+          <Property Name="r1" Type="Double" />
+          <Property Name="r2" Type="Double" />
+          <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID__4222D4EF" FromRole="I_geometrija" ToRole="Monoblok" />
+        </EntityType>
+        <EntityType Name="I_karakteristike">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="A" Type="Double" Nullable="false" />
+          <Property Name="G" Type="Double" Nullable="false" />
+          <Property Name="Ix" Type="Double" Nullable="false" />
+          <Property Name="Wx" Type="Double" Nullable="false" />
+          <Property Name="ix_jez" Type="Double" Nullable="false" />
+          <Property Name="Iy" Type="Double" Nullable="false" />
+          <Property Name="Wy" Type="Double" Nullable="false" />
+          <Property Name="iy_jez" Type="Double" Nullable="false" />
+          <Property Name="Sx" Type="Double" Nullable="false" />
+          <Property Name="s_x" Type="Double" Nullable="false" />
+          <Property Name="I_tor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID__44FF419A" FromRole="I_karakteristike" ToRole="Monoblok" />
+        </EntityType>
+        <EntityType Name="mon_opis">
+          <Key>
+            <PropertyRef Name="index_pr" />
+          </Key>
+          <Property Name="ID_mono" Type="Int32" Nullable="false" />
+          <Property Name="No_node" Type="Int32" Nullable="false" />
+          <Property Name="Node_x" Type="Double" Nullable="false" />
+          <Property Name="Node_y" Type="Double" Nullable="false" />
+          <Property Name="index_pr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Monoblok">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID_standard" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID_tip" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="I_geometrija" Relationship="Self.FK__Monoblok__ID__4222D4EF" FromRole="Monoblok" ToRole="I_geometrija" />
+          <NavigationProperty Name="I_karakteristike" Relationship="Self.FK__Monoblok__ID__44FF419A" FromRole="Monoblok" ToRole="I_karakteristike" />
+          <NavigationProperty Name="standard" Relationship="Self.FK__Monoblok__ID_sta__3F466844" FromRole="Monoblok" ToRole="standard" />
+          <NavigationProperty Name="tip_profila" Relationship="Self.FK__Monoblok__ID_tip__3C69FB99" FromRole="Monoblok" ToRole="tip_profila" />
+          <NavigationProperty Name="profil" Relationship="Self.FK__profil__ID_monob__398D8EEE" FromRole="Monoblok" ToRole="profil" />
+        </EntityType>
+        <EntityType Name="monoblok_pozicije_ojačanja">
+          <Key>
+            <PropertyRef Name="index_pr" />
+          </Key>
+          <Property Name="ID_mono" Type="Int32" Nullable="false" />
+          <Property Name="X_pos" Type="Double" Nullable="false" />
+          <Property Name="Y_pos" Type="Double" Nullable="false" />
+          <Property Name="br_segment" Type="Int32" Nullable="false" />
+          <Property Name="pravac" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="index_pr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ojačanje_opis">
+          <Key>
+            <PropertyRef Name="index_pr" />
+          </Key>
+          <Property Name="index_pr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_ojač" Type="Int32" Nullable="false" />
+          <Property Name="b" Type="Double" Nullable="false" />
+          <Property Name="h" Type="Double" Nullable="false" />
+          <Property Name="pol_x" Type="Double" Nullable="false" />
+          <Property Name="pol_y" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="profil">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID_monoblok" Type="Int32" Nullable="false" />
+          <Property Name="ID_ojačanje" Type="Int32" Nullable="false" />
+          <Property Name="pos_x" Type="Double" />
+          <Property Name="pos_y" Type="Double" />
+          <NavigationProperty Name="Monoblok" Relationship="Self.FK__profil__ID_monob__398D8EEE" FromRole="profil" ToRole="Monoblok" />
+          <NavigationProperty Name="Profil_I_karakteristike" Relationship="Self.FK__profil__ID__4D94879B" FromRole="profil" ToRole="Profil_I_karakteristike" />
+        </EntityType>
+        <EntityType Name="Profil_I_karakteristike">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="A" Type="Double" Nullable="false" />
+          <Property Name="G" Type="Double" Nullable="false" />
+          <Property Name="Ix" Type="Double" Nullable="false" />
+          <Property Name="Wx" Type="Double" Nullable="false" />
+          <Property Name="ix_jez" Type="Double" Nullable="false" />
+          <Property Name="Iy" Type="Double" Nullable="false" />
+          <Property Name="Wy" Type="Double" Nullable="false" />
+          <Property Name="iy_jez" Type="Double" Nullable="false" />
+          <Property Name="Sx" Type="Double" Nullable="false" />
+          <Property Name="s_x" Type="Double" Nullable="false" />
+          <Property Name="I_tor" Type="Double" Nullable="false" />
+          <NavigationProperty Name="profil" Relationship="Self.FK__profil__ID__4D94879B" FromRole="Profil_I_karakteristike" ToRole="profil" />
+        </EntityType>
+        <EntityType Name="standard">
+          <Key>
+            <PropertyRef Name="Id_standard" />
+          </Key>
+          <Property Name="Id_standard" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="šifra" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID_sta__3F466844" FromRole="standard" ToRole="Monoblok" />
+        </EntityType>
+        <EntityType Name="tip_profila">
+          <Key>
+            <PropertyRef Name="ID_tip" />
+          </Key>
+          <Property Name="ID_tip" Type="Int32" Nullable="false" />
+          <Property Name="tehnologija" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="oznaka" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID_tip__3C69FB99" FromRole="tip_profila" ToRole="Monoblok" />
+        </EntityType>
+        <EntityType Name="UserActivation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pass" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="level" Type="Int16" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Monoblok__ID__4222D4EF">
+          <End Role="I_geometrija" Type="Self.I_geometrija" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="I_geometrija">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID__44FF419A">
+          <End Role="I_karakteristike" Type="Self.I_karakteristike" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="I_karakteristike">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID_sta__3F466844">
+          <End Role="standard" Type="Self.standard" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="standard">
+              <PropertyRef Name="Id_standard" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID_standard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID_tip__3C69FB99">
+          <End Role="tip_profila" Type="Self.tip_profila" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tip_profila">
+              <PropertyRef Name="ID_tip" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID_tip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profil__ID_monob__398D8EEE">
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="1" />
+          <End Role="profil" Type="Self.profil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Monoblok">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="profil">
+              <PropertyRef Name="ID_monoblok" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profil__ID__4D94879B">
+          <End Role="Profil_I_karakteristike" Type="Self.Profil_I_karakteristike" Multiplicity="1" />
+          <End Role="profil" Type="Self.profil" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Profil_I_karakteristike">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="profil">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ČeličniProfiliEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="I_geometrija" EntityType="Self.I_geometrija" />
+          <EntitySet Name="I_karakteristike" EntityType="Self.I_karakteristike" />
+          <EntitySet Name="mon_opis" EntityType="Self.mon_opis" />
+          <EntitySet Name="Monoblok" EntityType="Self.Monoblok" />
+          <EntitySet Name="monoblok_pozicije_ojačanja" EntityType="Self.monoblok_pozicije_ojačanja" />
+          <EntitySet Name="ojačanje_opis" EntityType="Self.ojačanje_opis" />
+          <EntitySet Name="profil" EntityType="Self.profil" />
+          <EntitySet Name="Profil_I_karakteristike" EntityType="Self.Profil_I_karakteristike" />
+          <EntitySet Name="standard" EntityType="Self.standard" />
+          <EntitySet Name="tip_profila" EntityType="Self.tip_profila" />
+          <EntitySet Name="UserActivation" EntityType="Self.UserActivation" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Monoblok__ID__4222D4EF" Association="Self.FK__Monoblok__ID__4222D4EF">
+            <End Role="I_geometrija" EntitySet="I_geometrija" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID__44FF419A" Association="Self.FK__Monoblok__ID__44FF419A">
+            <End Role="I_karakteristike" EntitySet="I_karakteristike" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID_sta__3F466844" Association="Self.FK__Monoblok__ID_sta__3F466844">
+            <End Role="standard" EntitySet="standard" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID_tip__3C69FB99" Association="Self.FK__Monoblok__ID_tip__3C69FB99">
+            <End Role="tip_profila" EntitySet="tip_profila" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profil__ID_monob__398D8EEE" Association="Self.FK__profil__ID_monob__398D8EEE">
+            <End Role="Monoblok" EntitySet="Monoblok" />
+            <End Role="profil" EntitySet="profil" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profil__ID__4D94879B" Association="Self.FK__profil__ID__4D94879B">
+            <End Role="Profil_I_karakteristike" EntitySet="Profil_I_karakteristike" />
+            <End Role="profil" EntitySet="profil" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ČeličniProfiliModelStoreContainer" CdmEntityContainer="ČeličniProfiliEntities">
+          <EntitySetMapping Name="I_geometrija">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.I_geometrija">
+              <MappingFragment StoreEntitySet="I-geometrija">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="b" ColumnName="b" />
+                <ScalarProperty Name="h" ColumnName="h" />
+                <ScalarProperty Name="s" ColumnName="s" />
+                <ScalarProperty Name="t" ColumnName="t" />
+                <ScalarProperty Name="r1" ColumnName="r1" />
+                <ScalarProperty Name="r2" ColumnName="r2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_karakteristike">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.I_karakteristike">
+              <MappingFragment StoreEntitySet="I-karakteristike">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="G" ColumnName="G" />
+                <ScalarProperty Name="Ix" ColumnName="Ix" />
+                <ScalarProperty Name="Wx" ColumnName="Wx" />
+                <ScalarProperty Name="ix_jez" ColumnName="ix_jez" />
+                <ScalarProperty Name="Iy" ColumnName="Iy" />
+                <ScalarProperty Name="Wy" ColumnName="Wy" />
+                <ScalarProperty Name="iy_jez" ColumnName="iy_jez" />
+                <ScalarProperty Name="Sx" ColumnName="Sx" />
+                <ScalarProperty Name="s_x" ColumnName="s_x" />
+                <ScalarProperty Name="I_tor" ColumnName="I_tor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mon_opis">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.mon_opis">
+              <MappingFragment StoreEntitySet="mon_opis">
+                <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
+                <ScalarProperty Name="No_node" ColumnName="No_node" />
+                <ScalarProperty Name="Node_x" ColumnName="Node_x" />
+                <ScalarProperty Name="Node_y" ColumnName="Node_y" />
+                <ScalarProperty Name="index_pr" ColumnName="index_pr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Monoblok">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
+              <MappingFragment StoreEntitySet="Monoblok">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="monoblok_pozicije_ojačanja">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.monoblok_pozicije_ojačanja">
+              <MappingFragment StoreEntitySet="monoblok_pozicije_ojačanja">
+                <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
+                <ScalarProperty Name="X_pos" ColumnName="X_pos" />
+                <ScalarProperty Name="Y_pos" ColumnName="Y_pos" />
+                <ScalarProperty Name="br_segment" ColumnName="br_segment" />
+                <ScalarProperty Name="pravac" ColumnName="pravac" />
+                <ScalarProperty Name="index_pr" ColumnName="index_pr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ojačanje_opis">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.ojačanje_opis">
+              <MappingFragment StoreEntitySet="ojačanje_opis">
+                <ScalarProperty Name="index_pr" ColumnName="index_pr" />
+                <ScalarProperty Name="Id_ojač" ColumnName="Id_ojač" />
+                <ScalarProperty Name="b" ColumnName="b" />
+                <ScalarProperty Name="h" ColumnName="h" />
+                <ScalarProperty Name="pol_x" ColumnName="pol_x" />
+                <ScalarProperty Name="pol_y" ColumnName="pol_y" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profil">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.profil">
+              <MappingFragment StoreEntitySet="profil">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_monoblok" ColumnName="ID_monoblok" />
+                <ScalarProperty Name="ID_ojačanje" ColumnName="ID_ojačanje" />
+                <ScalarProperty Name="pos_x" ColumnName="pos_x" />
+                <ScalarProperty Name="pos_y" ColumnName="pos_y" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profil_I_karakteristike">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.Profil_I_karakteristike">
+              <MappingFragment StoreEntitySet="Profil_I-karakteristike">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="G" ColumnName="G" />
+                <ScalarProperty Name="Ix" ColumnName="Ix" />
+                <ScalarProperty Name="Wx" ColumnName="Wx" />
+                <ScalarProperty Name="ix_jez" ColumnName="ix_jez" />
+                <ScalarProperty Name="Iy" ColumnName="Iy" />
+                <ScalarProperty Name="Wy" ColumnName="Wy" />
+                <ScalarProperty Name="iy_jez" ColumnName="iy_jez" />
+                <ScalarProperty Name="Sx" ColumnName="Sx" />
+                <ScalarProperty Name="s_x" ColumnName="s_x" />
+                <ScalarProperty Name="I_tor" ColumnName="I_tor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="standard">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.standard">
+              <MappingFragment StoreEntitySet="standard">
+                <ScalarProperty Name="Id_standard" ColumnName="Id_standard" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="šifra" ColumnName="šifra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tip_profila">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_profila">
+              <MappingFragment StoreEntitySet="tip profila">
+                <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
+                <ScalarProperty Name="tehnologija" ColumnName="tehnologija" />
+                <ScalarProperty Name="oznaka" ColumnName="oznaka" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserActivation">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.UserActivation">
+              <MappingFragment StoreEntitySet="UserActivation">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

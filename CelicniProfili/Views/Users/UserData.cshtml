@@ -1,0 +1,58 @@
+﻿@model CelicniProfili.Models.Users
+
+@{
+	string Akcija = ViewBag.Action;
+	ViewBag.Title = "Podaci Korisnika";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nalog Korisnika</h2>
+@using (Html.BeginForm("UserData", "Users",  FormMethod.Post)) {
+
+	<fieldset>
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary(true)
+
+		@if (@ViewBag.poruka != null) {
+
+			<div style="border: 1px solid red">
+				@ViewBag.poruka
+			</div>
+		}
+
+		@Html.HiddenFor(a => a.id)
+		@Html.HiddenFor(a => a.level)
+
+		<table>
+			<tr>
+				<td>@Html.LabelFor(a => a.Name)</td>
+				<td>@Html.TextBoxFor(a => a.Name, new { @Value = Model.Name, @readonly="readonly" })</td>
+				<td>@Html.ValidationMessageFor(a => a.email)</td>
+			</tr>
+
+			<tr>
+				<td>@Html.LabelFor(a => a.email)</td>
+				<td>@Html.TextBoxFor(a => a.email, new { @Value = Model.email})</td>
+				<td>@Html.ValidationMessageFor(a => a.email)</td>
+			</tr>
+
+			<tr>
+				<td>@Html.LabelFor(a => a.pass)</td>
+				<td>@Html.PasswordFor(a => a.pass, new { @Value = Model.pass })</td>
+				<td>@Html.ValidationMessageFor(a => a.pass)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>
+					@Html.ActionLink("Cancel and Back", Akcija, "Users", new { poruka2 = "Nema promene podataka" }, new { @class = "btn btn-info" })
+				</td>
+				<td>
+					<input type="submit" value="Save" class = "btn btn-info" />
+				</td>
+				<td></td>
+			</tr>
+		</table>
+	</fieldset>
+}
+

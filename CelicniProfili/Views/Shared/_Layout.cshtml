@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>@ViewBag.Title</title>
+		@using System.Web.Optimization
+		@Styles.Render("~/Content/css")
+		@Scripts.Render("~/bundles/modernizr")
+	</head>
+
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+
+					@using CelicniProfili.Controllers
+					@{
+						//Prvi link (onaj koje se vidi i kad smanjim stranicu) je prvog indexa u VisiblesInd
+						int[] Visibles = UsersController.VisiblesInd;
+						int index1 = Visibles[0] - 1;
+						string naziv1 = UsersController.ActionNames[index1];
+						string akcija1 = UsersController.ActionList[index1];
+					}
+
+					@Html.ActionLink(naziv1, akcija1, "Users", new { area = "" }, new { @class = "navbar-brand" })
+				</div>
+
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						@{//ostali linkovi idu u meni koji se sakriva kod smanjenja stranice
+							if (Visibles.Length > 1) {
+								for (int i1 = 2; i1 <= Visibles.Length; i1++) {
+								<li>@Html.ActionLink(UsersController.ActionNames[Visibles[i1 - 1] - 1], UsersController.ActionList[Visibles[i1 - 1] - 1], "Users")</li>
+								}
+							}
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container body-content">
+			@RenderBody()
+			<hr />
+
+			<footer>
+				<p>@DateTime.Now.Year - Čelični profili</p>
+			</footer>
+		</div>
+
+		@Scripts.Render("~/bundles/jquery")
+		@Scripts.Render("~/bundles/bootstrap")
+		@RenderSection("scripts", required: false)
+	</body>
+</html>
