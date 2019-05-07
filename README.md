@@ -16,9 +16,4 @@ Baza podataka: Backup baze se nalazi u CelicniProfili/AppData/Baza folderu. Tu j
 	- [ojačanje_opis] : dimenzije ojačavajućeg lima
 	- [Profil_I-karakteristike] : mehaničke karakteristike profila
 
-Korišćene tehnlogije i bibioteke:
-	.NET ASP MVC + Web API
-	SQL
-	Entity framework
-	MailKit
-	SVG
+Korišćene tehnlogije i bibioteke: .NET ASP MVC + Web API, SQL, Entity framework, MailKit, SVG
