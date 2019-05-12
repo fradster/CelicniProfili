@@ -144,7 +144,6 @@ namespace CelicniProfili.Models {
 		[StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
 		public string pass { get; set; }
 		
-
 		[Required]
 		public short level { get; set; }
 
@@ -153,11 +152,26 @@ namespace CelicniProfili.Models {
 		public string email { get; set; }
 	}
 
-	public class UserActivationMetadata{
+
+	public class UserActivationMetadata {
 		
 		[Required]
 		public int UserId { get; set; }
 
 		public System.Guid ActivationCode { get; set; }
+	}
+
+
+	public class Admin_SMTP_parameteresMetaData {
+
+		[Required(ErrorMessage = "Ime user-a je obavezno")]
+		public string UserName { get; set; }
+
+		[Required(ErrorMessage = "Nedostaje password")]
+		public string password { get; set; }
+
+		[Required(ErrorMessage = "Mora Host name")]
+		[RegularExpression(@"^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$", ErrorMessage = "Nije u dobrom formatu")]
+		public string host { get; set; }
 	}
 }

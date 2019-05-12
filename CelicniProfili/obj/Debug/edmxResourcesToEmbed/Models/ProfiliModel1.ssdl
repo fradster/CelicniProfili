@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ČeličniProfiliModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin SMTP parameteres">
+    <Key>
+      <PropertyRef Name="Ind" />
+    </Key>
+    <Property Name="Ind" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="host" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
   <EntityType Name="I-geometrija">
     <Key>
       <PropertyRef Name="ID" />
@@ -203,6 +212,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="ČeličniProfiliModelStoreContainer">
+    <EntitySet Name="Admin SMTP parameteres" EntityType="Self.Admin SMTP parameteres" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="I-geometrija" EntityType="Self.I-geometrija" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="I-karakteristike" EntityType="Self.I-karakteristike" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="mon_opis" EntityType="Self.mon_opis" Schema="dbo" store:Type="Tables" />

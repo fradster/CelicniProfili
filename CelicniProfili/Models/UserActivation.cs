@@ -7,12 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CelicniProfili.Models {
-	using System;
-	using System.Collections.Generic;
+namespace CelicniProfili.Models
+{
+    using System;
+    using System.Collections.Generic;
     
-	public partial class UserActivation	{
-		public int UserId { get; set; }
-		public System.Guid ActivationCode { get; set; }
-	}
+    public partial class UserActivation
+    {
+        public int UserId { get; set; }
+        public System.Guid ActivationCode { get; set; }
+    }
 }

@@ -143,5 +143,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Admin_SMTP_parameteres">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.Admin_SMTP_parameteres">
+        <MappingFragment StoreEntitySet="Admin SMTP parameteres">
+          <ScalarProperty Name="host" ColumnName="host" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Ind" ColumnName="Ind" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

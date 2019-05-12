@@ -1,0 +1,56 @@
+﻿@model CelicniProfili.Models.Admin_SMTP_parameteres
+
+@{
+	ViewBag.Title = "SMTP Parameters";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SMTP params</h2>
+
+@using (Html.BeginForm()) {
+	<fieldset>
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary(true)
+
+		@if (@ViewBag.poruka != null) {
+			<div style="border: 1px solid red">
+				@ViewBag.poruka
+			</div>
+		}
+
+		<table>
+			<tr>
+				@Html.HiddenFor(model => model.Ind)
+			</tr>
+
+			<tr>
+				<td>@Html.LabelFor(a => a.UserName)</td>
+				<td>@Html.TextBoxFor(a => a.UserName, new { @Value = Model.UserName, placeholder = "user@gmail.com" })</td>
+				<td>@Html.ValidationMessageFor(a => a.UserName)</td>
+			</tr>
+
+			<tr>
+				<td>@Html.LabelFor(a => a.password)</td>
+				<td>@Html.TextBoxFor(a => a.password, new { @Value = Model.password})</td>
+				<td>@Html.ValidationMessageFor(a => a.password)</td>
+			</tr>
+
+			<tr>
+				<td>@Html.LabelFor(a => a.host)</td>
+				<td>@Html.TextBoxFor(a => a.host, new { @Value = Model.host, placeholder = "smtp.gmail.com" })</td>
+				<td>@Html.ValidationMessageFor(a => a.host)</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td>
+					<input type="submit" value="Save" class="btn btn-info" />
+				</td>
+				<td>
+					@Html.ActionLink("Back to User Panel", "UserPanel", "Users", new { area = "" }, new { @class = "btn btn-info" })
+				</td>
+			</tr>
+		</table>
+			
+	</fieldset>
+}

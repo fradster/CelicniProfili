@@ -12,19 +12,11 @@ namespace CelicniProfili.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Admin_SMTP_parameteres
     {
-        public int id { get; set; }
-        public string Name { get; set; }
-        public string pass { get; set; }
-        public short level { get; set; }
-        public string email { get; set; }
-
-				public Users () {
-					Name = "gonzo";
-					level = 1;
-					email = "bozo@ja.com";
-					pass = "______";
-				}
-	}
+        public int Ind { get; set; }
+        public string UserName { get; set; }
+        public string password { get; set; }
+        public string host { get; set; }
+    }
 }

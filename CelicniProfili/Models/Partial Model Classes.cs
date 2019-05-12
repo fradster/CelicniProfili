@@ -38,4 +38,7 @@ namespace CelicniProfili.Models {
 
 	[MetadataType(typeof(UserActivationMetadata))]
 	public partial class UserActivation { }
+
+	[MetadataType(typeof(Admin_SMTP_parameteresMetaData))]
+	public partial class Admin_SMTP_parameteres { }
 }

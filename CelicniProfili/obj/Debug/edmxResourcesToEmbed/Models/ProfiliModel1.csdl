@@ -251,5 +251,15 @@
       <End Role="Profil_I_karakteristike" EntitySet="Profil_I_karakteristike" />
       <End Role="profil" EntitySet="profil" />
     </AssociationSet>
+    <EntitySet Name="Admin_SMTP_parameteres" EntityType="ČeličniProfiliModel.Admin_SMTP_parameteres" />
   </EntityContainer>
+  <EntityType Name="Admin_SMTP_parameteres">
+    <Key>
+      <PropertyRef Name="Ind" />
+    </Key>
+    <Property Name="Ind" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="host" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>
