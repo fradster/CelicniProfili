@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+﻿<<<<<<< HEAD
 ﻿# CelicniProfili
 =======
 # CelicniProfili
@@ -27,8 +27,4 @@ Korišćene tehnlogije i bibioteke:
 	- SQL
 	- Entity framework
 	- MailKit
-<<<<<<< HEAD
 	-SVG
-=======
-	-SVG
->>>>>>> 1567ef41d1865ab932b4fbf9861e0bea5c594c7d
