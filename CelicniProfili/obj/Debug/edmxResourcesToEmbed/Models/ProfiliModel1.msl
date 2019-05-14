@@ -46,6 +46,7 @@
     <EntitySetMapping Name="Monoblok">
       <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
         <MappingFragment StoreEntitySet="Monoblok">
+          <ScalarProperty Name="id_tehn" ColumnName="id_tehn" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
@@ -115,15 +116,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tip_profila">
-      <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_profila">
-        <MappingFragment StoreEntitySet="tip profila">
-          <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
-          <ScalarProperty Name="tehnologija" ColumnName="tehnologija" />
-          <ScalarProperty Name="oznaka" ColumnName="oznaka" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserActivation">
       <EntityTypeMapping TypeName="ČeličniProfiliModel.UserActivation">
         <MappingFragment StoreEntitySet="UserActivation">
@@ -150,6 +142,22 @@
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Ind" ColumnName="Ind" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tehnologija_monoblok">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.tehnologija_monoblok">
+        <MappingFragment StoreEntitySet="tehnologija monoblok">
+          <ScalarProperty Name="tehnologija" ColumnName="tehnologija" />
+          <ScalarProperty Name="ID_tehn" ColumnName="ID_tehn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tip_monoblok">
+      <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_monoblok">
+        <MappingFragment StoreEntitySet="tip monoblok">
+          <ScalarProperty Name="tip" ColumnName="tip" />
+          <ScalarProperty Name="id_tip" ColumnName="id_tip" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

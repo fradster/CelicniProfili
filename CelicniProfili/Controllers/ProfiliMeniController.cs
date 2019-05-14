@@ -25,7 +25,7 @@ namespace CelicniProfili.Controllers{
 		//public ActionResult MonoblockList () {
 
 		//	using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
-				
+						
 
 		//	}
 		//}

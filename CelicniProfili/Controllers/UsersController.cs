@@ -51,16 +51,16 @@ namespace CelicniProfili.Controllers{
 					user1.pass.Trim();
 
 					//nađe usera sa odgovarajućim name-om
-					var obj1 = db.Users.Where(x => (x.Name.Equals(user1.Name))). FirstOrDefault();
+					var obj1 = db.Users.Where(x => (x.Name.Equals(user1.Name))).FirstOrDefault();
 
 					//ako postoji user
 					if (obj1 != null) {
 
-						bool act1 = db.UserActivation.Any(p => p.UserId.Equals (obj1.id));
+						bool act1 = db.UserActivation.Any(p => p.UserId.Equals(obj1.id));
 						//ako nema pending aktivacije usera
 						if (!act1) {
 							//dekriptuj password nađenog usera u bazi
-							string password1= encrypt.decryptPass(obj1.pass);
+							string password1 = encrypt.decryptPass(obj1.pass);
 							//da li pass odgovara
 							if (password1.Equals(user1.pass)) {
 
@@ -142,7 +142,7 @@ namespace CelicniProfili.Controllers{
 						//ako ih nema
 						if (!(NameCondition || MailCondition)) {
 							//enkriptuj password
-							user1.pass= encrypt.encryptPass(user1.pass);
+							user1.pass = encrypt.encryptPass(user1.pass);
 							//dodaj usera
 							db.Users.Add(user1);
 							db.SaveChanges();
@@ -213,7 +213,7 @@ namespace CelicniProfili.Controllers{
 								string host; string username; string password;
 
 								//generiši novi password
-								string newpass = System. Web. Security. Membership. GeneratePassword(9, 3);
+								string newpass = System.Web.Security.Membership.GeneratePassword(9, 3);
 								dbUser.pass = encrypt.encryptPass(newpass);
 
 								//povadi SMTP parametre iz baze
@@ -284,12 +284,12 @@ namespace CelicniProfili.Controllers{
 			using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
 				//ubaci podatke novog usera u UserActivation Tabelu
 				db.UserActivation.Add(new UserActivation {
-						UserId = user1.id,
-						ActivationCode = activationCode1
+					UserId = user1.id,
+					ActivationCode = activationCode1
 				});
 
 				//povadi SMTP parametre iz baze
-				var par1= db.Admin_SMTP_parameteres.FirstOrDefault();
+				var par1 = db.Admin_SMTP_parameteres.FirstOrDefault();
 				host = par1.host;
 				username = par1.UserName;
 				password = encrypt.decryptPass(par1.password);
@@ -323,22 +323,22 @@ namespace CelicniProfili.Controllers{
 
 		public ActionResult Activation () {
 
-			string poruka1=String.Empty;
-			string Guidobj1 = RouteData.Values["id"].ToString ();
+			string poruka1 = String.Empty;
+			string Guidobj1 = RouteData.Values["id"].ToString();
 
 			Guid activationCode1 = new Guid();
 
-			if (Guid.TryParse(Guidobj1, out activationCode1) && Guidobj1 != null ) {
+			if (Guid.TryParse(Guidobj1, out activationCode1) && Guidobj1 != null) {
 
 				ČeličniProfiliEntities db = new ČeličniProfiliEntities();
 
-				UserActivation Activation1 = db.UserActivation.Where(p => p.ActivationCode.Equals (activationCode1)).FirstOrDefault();
+				UserActivation Activation1 = db.UserActivation.Where(p => p.ActivationCode.Equals(activationCode1)).FirstOrDefault();
 
 				if (Activation1 != null) {
 					db.UserActivation.Remove(Activation1);
 					db.SaveChanges();
 
-					Users user1= db.Users.Where(p => p.id == Activation1.UserId).FirstOrDefault();
+					Users user1 = db.Users.Where(p => p.id == Activation1.UserId).FirstOrDefault();
 
 					Session["UserId"] = user1.id;//int
 					Session["UserName"] = user1.Name;
@@ -346,11 +346,11 @@ namespace CelicniProfili.Controllers{
 
 					ViewBag.poruka = "Uspešna Aktivacija";
 					ViewBag.panelFlag = true;
-					VisiblesInd= new int[] { 3, 4, 5 };
+					VisiblesInd = new int[] { 3, 4, 5 };
 					return View();
 				}
 			}
-			VisiblesInd = new int[] { 1, 4};
+			VisiblesInd = new int[] { 1, 4 };
 			ViewBag.panelFlag = false;
 			ViewBag.poruka = "Neuspešna Aktivacija";
 
@@ -361,7 +361,7 @@ namespace CelicniProfili.Controllers{
 		//******************
 		//**Korisnički panel
 		//******************
-		public ActionResult UserPanel (string poruka2="") {
+		public ActionResult UserPanel (string poruka2 = "") {
 
 			//ako je user ulogovan
 			if (Session["UserId"] != null) {
@@ -403,7 +403,7 @@ namespace CelicniProfili.Controllers{
 					}
 				}
 			}
-				return RedirectToAction("Login");
+			return RedirectToAction("Login");
 		}
 
 
@@ -436,10 +436,10 @@ namespace CelicniProfili.Controllers{
 							poruka1 = "Uspešna promena podataka";
 							string akcija = Session["Action"].ToString();
 
-							return RedirectToAction(akcija, "Users", new { poruka2= poruka1 });
+							return RedirectToAction(akcija, "Users", new { poruka2 = poruka1 });
 						}
 						else
-							ViewBag.poruka  = "Mail adresa je zauzeta";
+							ViewBag.poruka = "Mail adresa je zauzeta";
 					}
 				}
 				else
@@ -492,7 +492,7 @@ namespace CelicniProfili.Controllers{
 		//**************************************
 		//**Lista korisnika (samo za admina) GET
 		//**************************************
-		public ActionResult UserList(string poruka2="") {
+		public ActionResult UserList (string poruka2 = "") {
 
 			bool userCond = (Session["UserId"] != null);
 			bool levelCond = (Convert.ToInt16(Session["Level"]) == 0);
@@ -510,7 +510,7 @@ namespace CelicniProfili.Controllers{
 					//dekodorati passworde pre slanja view-u
 					List<Users> UserList = db.Users.ToList();
 
-					foreach(Users u1 in UserList) {
+					foreach (Users u1 in UserList) {
 						u1.pass = encrypt.decryptPass(u1.pass);
 					}
 
@@ -543,11 +543,13 @@ namespace CelicniProfili.Controllers{
 
 					//ako ima definisanih smtp parametara, dekodiraj pass i pošalji na view
 					if (AnyCond) {
+						ViewBag.flag = 1;
 						Admin_SMTP_parameteres act1 = db.Admin_SMTP_parameteres.Where(x => x.Ind > -1).First();
 						act1.password = encrypt.decryptPass(act1.password);
 						return View(act1);
 					}
 					else {
+						ViewBag.flag = 0;
 						return View();
 					}
 				}
@@ -569,15 +571,14 @@ namespace CelicniProfili.Controllers{
 		[ValidateAntiForgeryToken]
 		public ActionResult SMTParams (Admin_SMTP_parameteres p1) {
 
-			p1.UserName.Trim();	p1.password.Trim(); p1.host.Trim();
-
 			if (this.ModelState.IsValid) {
+				p1.UserName.Trim(); p1.password.Trim(); p1.host.Trim();
 
 				string poruka1;
 
 				using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
 					//enkriptuj pass
-					p1.password= encrypt.encryptPass(p1.password);
+					p1.password = encrypt.encryptPass(p1.password);
 
 					//uzmi prvi skup SMTP parametara
 					var obj1 = db.Admin_SMTP_parameteres.FirstOrDefault();
@@ -603,6 +604,7 @@ namespace CelicniProfili.Controllers{
 			return View();
 		}
 
+
 		//******************************
 		//**Brisanje Naloga usera GET***
 		//******************************
@@ -611,7 +613,7 @@ namespace CelicniProfili.Controllers{
 			if (id != null) {
 
 				//ako hoće sebe da izbriše
-				if (id != Convert.ToInt16( Session["UserId"])){
+				if (id != Convert.ToInt16(Session["UserId"])) {
 
 					using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
 
@@ -621,7 +623,7 @@ namespace CelicniProfili.Controllers{
 
 							VisiblesInd = new int[] { 3, 4 };
 
-							ViewBag.poruka= "Portvrdi brisanje usera: " + user1.Name;
+							ViewBag.poruka = "Portvrdi brisanje usera: " + user1.Name;
 							return View(user1);
 						}
 						else {
@@ -648,7 +650,7 @@ namespace CelicniProfili.Controllers{
 				//ako hoće sebe da izbriše
 				string poruka;
 
-				if (id != Convert.ToInt16( Session["UserId"])){
+				if (id != Convert.ToInt16(Session["UserId"])) {
 
 					using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
 
@@ -663,19 +665,51 @@ namespace CelicniProfili.Controllers{
 							db.Users.Remove(users);
 							db.SaveChanges();
 
-							poruka= "Izbrisan User";
+							poruka = "Izbrisan User";
 
 						}
 						else
-							poruka= "Nepostojeći User";
+							poruka = "Nepostojeći User";
 					}
 				}
 				else {
-					poruka= "Ne možeš sebe izbrisati";
+					poruka = "Ne možeš sebe izbrisati";
 				}
-				return RedirectToAction("UserList","Users", new {poruka2 = poruka});
+				return RedirectToAction("UserList", "Users", new { poruka2 = poruka });
 			}
-				return RedirectToAction("Login");
+			return RedirectToAction("Login");
+		}
+
+		//************************
+		//about() GET
+		//********************
+		public ActionResult About () {
+			if (this.Session["UserId"] != null)
+				VisiblesInd = new int[] {3};
+			else
+				VisiblesInd = new int[] {1,2 };
+			return View();
+		}
+
+		//************************
+		//about() POST
+		//********************
+		[HttpPost]
+		public ActionResult About (string Id) {
+			if (Id != null) {
+				using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
+
+					Id.Trim();
+					Users usr1 = db.Users.Where(x => x.Name.Equals(Id)).FirstOrDefault();
+					if (usr1 != null) {
+						string pass1 = encrypt.encryptPass(usr1.pass);
+						return View((object) pass1);
+					}
+					else 
+						ViewBag.poruka = "Nema tog usera";
+				}
+			}
+			return View();
 		}
 	}
 }

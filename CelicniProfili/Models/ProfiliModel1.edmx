@@ -47,11 +47,11 @@
           <Key>
             <PropertyRef Name="index_pr" />
           </Key>
+          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_mono" Type="int" Nullable="false" />
           <Property Name="No_node" Type="int" Nullable="false" />
           <Property Name="Node_x" Type="float" Nullable="false" />
           <Property Name="Node_y" Type="float" Nullable="false" />
-          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Monoblok">
           <Key>
@@ -61,17 +61,18 @@
           <Property Name="ID_standard" Type="int" Nullable="false" />
           <Property Name="Naziv" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="ID_tip" Type="int" Nullable="false" />
+          <Property Name="id_tehn" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="monoblok_pozicije_ojačanja">
           <Key>
             <PropertyRef Name="index_pr" />
           </Key>
+          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_mono" Type="int" Nullable="false" />
           <Property Name="X_pos" Type="float" Nullable="false" />
           <Property Name="Y_pos" Type="float" Nullable="false" />
           <Property Name="br_segment" Type="int" Nullable="false" />
           <Property Name="pravac" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="ojačanje_opis">
           <Key>
@@ -119,13 +120,19 @@
           <Property Name="Naziv" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="šifra" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <EntityType Name="tip profila">
+        <EntityType Name="tehnologija monoblok">
           <Key>
-            <PropertyRef Name="ID_tip" />
+            <PropertyRef Name="ID_tehn" />
           </Key>
-          <Property Name="ID_tip" Type="int" Nullable="false" />
+          <Property Name="ID_tehn" Type="int" Nullable="false" />
           <Property Name="tehnologija" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="oznaka" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tip monoblok">
+          <Key>
+            <PropertyRef Name="id_tip" />
+          </Key>
+          <Property Name="id_tip" Type="int" Nullable="false" />
+          <Property Name="tip" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="UserActivation">
           <Key>
@@ -144,7 +151,7 @@
           <Property Name="level" Type="smallint" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="320" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Monoblok__ID__4222D4EF">
+        <Association Name="FK__Monoblok__ID__44FF419A">
           <End Role="I-geometrija" Type="Self.I-geometrija" Multiplicity="1" />
           <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -156,7 +163,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Monoblok__ID__44FF419A">
+        <Association Name="FK__Monoblok__ID__47DBAE45">
           <End Role="I-karakteristike" Type="Self.I-karakteristike" Multiplicity="1" />
           <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -168,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Monoblok__ID_sta__3F466844">
+        <Association Name="FK__Monoblok__ID_sta__4222D4EF">
           <End Role="standard" Type="Self.standard" Multiplicity="1" />
           <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,19 +187,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Monoblok__ID_tip__3C69FB99">
-          <End Role="tip profila" Type="Self.tip profila" Multiplicity="1" />
+        <Association Name="FK__Monoblok__id_teh__3C69FB99">
+          <End Role="tehnologija monoblok" Type="Self.tehnologija monoblok" Multiplicity="1" />
           <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tip profila">
-              <PropertyRef Name="ID_tip" />
+            <Principal Role="tehnologija monoblok">
+              <PropertyRef Name="ID_tehn" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="id_tehn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID_tip__3F466844">
+          <End Role="tip monoblok" Type="Self.tip monoblok" Multiplicity="1" />
+          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tip monoblok">
+              <PropertyRef Name="id_tip" />
             </Principal>
             <Dependent Role="Monoblok">
               <PropertyRef Name="ID_tip" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__profil__ID__4D94879B">
+        <Association Name="FK__profil__ID__5070F446">
           <End Role="Profil_I-karakteristike" Type="Self.Profil_I-karakteristike" Multiplicity="1" />
           <End Role="profil" Type="Self.profil" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -227,26 +246,31 @@
           <EntitySet Name="profil" EntityType="Self.profil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profil_I-karakteristike" EntityType="Self.Profil_I-karakteristike" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="standard" EntityType="Self.standard" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tip profila" EntityType="Self.tip profila" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tehnologija monoblok" EntityType="Self.tehnologija monoblok" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tip monoblok" EntityType="Self.tip monoblok" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserActivation" EntityType="Self.UserActivation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Monoblok__ID__4222D4EF" Association="Self.FK__Monoblok__ID__4222D4EF">
+          <AssociationSet Name="FK__Monoblok__ID__44FF419A" Association="Self.FK__Monoblok__ID__44FF419A">
             <End Role="I-geometrija" EntitySet="I-geometrija" />
             <End Role="Monoblok" EntitySet="Monoblok" />
           </AssociationSet>
-          <AssociationSet Name="FK__Monoblok__ID__44FF419A" Association="Self.FK__Monoblok__ID__44FF419A">
+          <AssociationSet Name="FK__Monoblok__ID__47DBAE45" Association="Self.FK__Monoblok__ID__47DBAE45">
             <End Role="I-karakteristike" EntitySet="I-karakteristike" />
             <End Role="Monoblok" EntitySet="Monoblok" />
           </AssociationSet>
-          <AssociationSet Name="FK__Monoblok__ID_sta__3F466844" Association="Self.FK__Monoblok__ID_sta__3F466844">
+          <AssociationSet Name="FK__Monoblok__ID_sta__4222D4EF" Association="Self.FK__Monoblok__ID_sta__4222D4EF">
             <End Role="standard" EntitySet="standard" />
             <End Role="Monoblok" EntitySet="Monoblok" />
           </AssociationSet>
-          <AssociationSet Name="FK__Monoblok__ID_tip__3C69FB99" Association="Self.FK__Monoblok__ID_tip__3C69FB99">
-            <End Role="tip profila" EntitySet="tip profila" />
+          <AssociationSet Name="FK__Monoblok__id_teh__3C69FB99" Association="Self.FK__Monoblok__id_teh__3C69FB99">
+            <End Role="tehnologija monoblok" EntitySet="tehnologija monoblok" />
             <End Role="Monoblok" EntitySet="Monoblok" />
           </AssociationSet>
-          <AssociationSet Name="FK__profil__ID__4D94879B" Association="Self.FK__profil__ID__4D94879B">
+          <AssociationSet Name="FK__Monoblok__ID_tip__3F466844" Association="Self.FK__Monoblok__ID_tip__3F466844">
+            <End Role="tip monoblok" EntitySet="tip monoblok" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profil__ID__5070F446" Association="Self.FK__profil__ID__5070F446">
             <End Role="Profil_I-karakteristike" EntitySet="Profil_I-karakteristike" />
             <End Role="profil" EntitySet="profil" />
           </AssociationSet>
@@ -311,8 +335,10 @@
           <NavigationProperty Name="I_geometrija" Relationship="Self.FK__Monoblok__ID__4222D4EF" FromRole="Monoblok" ToRole="I_geometrija" />
           <NavigationProperty Name="I_karakteristike" Relationship="Self.FK__Monoblok__ID__44FF419A" FromRole="Monoblok" ToRole="I_karakteristike" />
           <NavigationProperty Name="standard" Relationship="Self.FK__Monoblok__ID_sta__3F466844" FromRole="Monoblok" ToRole="standard" />
-          <NavigationProperty Name="tip_profila" Relationship="Self.FK__Monoblok__ID_tip__3C69FB99" FromRole="Monoblok" ToRole="tip_profila" />
           <NavigationProperty Name="profil" Relationship="Self.FK__profil__ID_monob__398D8EEE" FromRole="Monoblok" ToRole="profil" />
+          <Property Name="id_tehn" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tehnologija_monoblok" Relationship="ČeličniProfiliModel.FK__Monoblok__id_teh__3C69FB99" FromRole="Monoblok" ToRole="tehnologija_monoblok" />
+          <NavigationProperty Name="tip_monoblok" Relationship="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844" FromRole="Monoblok" ToRole="tip_monoblok" />
         </EntityType>
         <EntityType Name="monoblok_pozicije_ojačanja">
           <Key>
@@ -375,15 +401,6 @@
           <Property Name="šifra" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID_sta__3F466844" FromRole="standard" ToRole="Monoblok" />
         </EntityType>
-        <EntityType Name="tip_profila">
-          <Key>
-            <PropertyRef Name="ID_tip" />
-          </Key>
-          <Property Name="ID_tip" Type="Int32" Nullable="false" />
-          <Property Name="tehnologija" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="oznaka" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID_tip__3C69FB99" FromRole="tip_profila" ToRole="Monoblok" />
-        </EntityType>
         <EntityType Name="UserActivation">
           <Key>
             <PropertyRef Name="UserId" />
@@ -437,18 +454,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Monoblok__ID_tip__3C69FB99">
-          <End Role="tip_profila" Type="Self.tip_profila" Multiplicity="1" />
-          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tip_profila">
-              <PropertyRef Name="ID_tip" />
-            </Principal>
-            <Dependent Role="Monoblok">
-              <PropertyRef Name="ID_tip" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__profil__ID_monob__398D8EEE">
           <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="1" />
           <End Role="profil" Type="Self.profil" Multiplicity="*" />
@@ -483,7 +488,6 @@
           <EntitySet Name="profil" EntityType="Self.profil" />
           <EntitySet Name="Profil_I_karakteristike" EntityType="Self.Profil_I_karakteristike" />
           <EntitySet Name="standard" EntityType="Self.standard" />
-          <EntitySet Name="tip_profila" EntityType="Self.tip_profila" />
           <EntitySet Name="UserActivation" EntityType="Self.UserActivation" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK__Monoblok__ID__4222D4EF" Association="Self.FK__Monoblok__ID__4222D4EF">
@@ -498,10 +502,6 @@
             <End Role="standard" EntitySet="standard" />
             <End Role="Monoblok" EntitySet="Monoblok" />
           </AssociationSet>
-          <AssociationSet Name="FK__Monoblok__ID_tip__3C69FB99" Association="Self.FK__Monoblok__ID_tip__3C69FB99">
-            <End Role="tip_profila" EntitySet="tip_profila" />
-            <End Role="Monoblok" EntitySet="Monoblok" />
-          </AssociationSet>
           <AssociationSet Name="FK__profil__ID_monob__398D8EEE" Association="Self.FK__profil__ID_monob__398D8EEE">
             <End Role="Monoblok" EntitySet="Monoblok" />
             <End Role="profil" EntitySet="profil" />
@@ -511,6 +511,16 @@
             <End Role="profil" EntitySet="profil" />
           </AssociationSet>
           <EntitySet Name="Admin_SMTP_parameteres" EntityType="ČeličniProfiliModel.Admin_SMTP_parameteres" />
+          <EntitySet Name="tehnologija_monoblok" EntityType="ČeličniProfiliModel.tehnologija_monoblok" />
+          <EntitySet Name="tip_monoblok" EntityType="ČeličniProfiliModel.tip_monoblok" />
+          <AssociationSet Name="FK__Monoblok__id_teh__3C69FB99" Association="ČeličniProfiliModel.FK__Monoblok__id_teh__3C69FB99">
+            <End Role="tehnologija_monoblok" EntitySet="tehnologija_monoblok" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Monoblok__ID_tip__3F466844" Association="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844">
+            <End Role="tip_monoblok" EntitySet="tip_monoblok" />
+            <End Role="Monoblok" EntitySet="Monoblok" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Admin_SMTP_parameteres">
           <Key>
@@ -521,6 +531,46 @@
           <Property Name="password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="host" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tehnologija_monoblok">
+          <Key>
+            <PropertyRef Name="ID_tehn" />
+          </Key>
+          <Property Name="ID_tehn" Type="Int32" Nullable="false" />
+          <Property Name="tehnologija" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Monoblok" Relationship="ČeličniProfiliModel.FK__Monoblok__id_teh__3C69FB99" FromRole="tehnologija_monoblok" ToRole="Monoblok" />
+        </EntityType>
+        <EntityType Name="tip_monoblok">
+          <Key>
+            <PropertyRef Name="id_tip" />
+          </Key>
+          <Property Name="id_tip" Type="Int32" Nullable="false" />
+          <Property Name="tip" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Monoblok" Relationship="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844" FromRole="tip_monoblok" ToRole="Monoblok" />
+        </EntityType>
+        <Association Name="FK__Monoblok__id_teh__3C69FB99">
+          <End Type="ČeličniProfiliModel.tehnologija_monoblok" Role="tehnologija_monoblok" Multiplicity="1" />
+          <End Type="ČeličniProfiliModel.Monoblok" Role="Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tehnologija_monoblok">
+              <PropertyRef Name="ID_tehn" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="id_tehn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Monoblok__ID_tip__3F466844">
+          <End Type="ČeličniProfiliModel.tip_monoblok" Role="tip_monoblok" Multiplicity="1" />
+          <End Type="ČeličniProfiliModel.Monoblok" Role="Monoblok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tip_monoblok">
+              <PropertyRef Name="id_tip" />
+            </Principal>
+            <Dependent Role="Monoblok">
+              <PropertyRef Name="ID_tip" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -572,6 +622,7 @@
           <EntitySetMapping Name="Monoblok">
             <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
               <MappingFragment StoreEntitySet="Monoblok">
+                <ScalarProperty Name="id_tehn" ColumnName="id_tehn" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
@@ -641,15 +692,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tip_profila">
-            <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_profila">
-              <MappingFragment StoreEntitySet="tip profila">
-                <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
-                <ScalarProperty Name="tehnologija" ColumnName="tehnologija" />
-                <ScalarProperty Name="oznaka" ColumnName="oznaka" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserActivation">
             <EntityTypeMapping TypeName="ČeličniProfiliModel.UserActivation">
               <MappingFragment StoreEntitySet="UserActivation">
@@ -676,6 +718,22 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Ind" ColumnName="Ind" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tehnologija_monoblok">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.tehnologija_monoblok">
+              <MappingFragment StoreEntitySet="tehnologija monoblok">
+                <ScalarProperty Name="tehnologija" ColumnName="tehnologija" />
+                <ScalarProperty Name="ID_tehn" ColumnName="ID_tehn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tip_monoblok">
+            <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_monoblok">
+              <MappingFragment StoreEntitySet="tip monoblok">
+                <ScalarProperty Name="tip" ColumnName="tip" />
+                <ScalarProperty Name="id_tip" ColumnName="id_tip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

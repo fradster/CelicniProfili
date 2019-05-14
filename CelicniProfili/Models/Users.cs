@@ -19,12 +19,5 @@ namespace CelicniProfili.Models
         public string pass { get; set; }
         public short level { get; set; }
         public string email { get; set; }
-
-				public Users () {
-					Name = "gonzo";
-					level = 1;
-					email = "bozo@ja.com";
-					pass = "______";
-				}
-	}
+    }
 }

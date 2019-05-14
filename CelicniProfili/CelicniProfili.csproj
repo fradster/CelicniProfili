@@ -196,11 +196,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProfiliModel1.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProfiliModel1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProfiliModel1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProfiliModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -212,7 +207,10 @@
     <Compile Include="Models\standard.cs">
       <DependentUpon>ProfiliModel1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tip_profila.cs">
+    <Compile Include="Models\tehnologija_monoblok.cs">
+      <DependentUpon>ProfiliModel1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tip_monoblok.cs">
       <DependentUpon>ProfiliModel1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserActivation.cs">

@@ -39,19 +39,6 @@ namespace CelicniProfili.Models {
 		public double I_tor { get; set; }
 	}
 
-	public class mon_opisMetadata
-	{
-		[Required]
-		public int ID_mono { get; set; }
-		[Required]
-		public int No_node { get; set; }
-		[Required]
-		public double Node_x { get; set; }
-		[Required]
-		public double Node_y { get; set; }
-		[Required]
-		public int index_pr { get; set; }
-	}
 
 	public class MonoblokMetadata
 	{
@@ -61,6 +48,9 @@ namespace CelicniProfili.Models {
 		public int ID_tip { get; set; }
 		[Required]
 		public string Naziv { get; set; }
+		[Required]
+		public string id_tehn { get; set; }
+
 	}
 
 	public class monoblok_pozicije_ojačanjaMetadata {
@@ -104,6 +94,8 @@ namespace CelicniProfili.Models {
 
 	public class Profil_I_karakteristikeMetadata {
 		[Required]
+		public int ID { get; set; }
+		[Required]
 		public double A { get; set; }
 		[Required]
 		public double G { get; set; }
@@ -127,15 +119,26 @@ namespace CelicniProfili.Models {
 		public double I_tor { get; set; }
 	}
 
-	public class tip_profilaMetadata {
-		[Required]
-		public string tehnologija { get; set; }
-		[Required]
-		public string oznaka { get; set; }
+	public class mon_opisMetadata {
+		public int ID_mono { get; set; }
+		public int No_node { get; set; }
+		public double Node_x { get; set; }
+		public double Node_y { get; set; }
+		public int index_pr { get; set; }
+	}
+
+	public class tip_monoblokMetadata {
+		public int id_tip { get; set; }
+		public int tip { get; set; }
+	}
+
+	public class tehnologija_monoblokMetadata {
+		public int ID_tehn { get; set; }
+		public int tehnologija { get; set; }
 	}
 
 	public class UsersMetadata {
-		
+
 		[Required (ErrorMessage = "Ime user-a je obavezno")]
 		public string Name { get; set; }
 
@@ -143,7 +146,7 @@ namespace CelicniProfili.Models {
 		[Required (ErrorMessage = "Nedostaje password")]
 		[StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
 		public string pass { get; set; }
-		
+
 		[Required]
 		public short level { get; set; }
 
@@ -154,7 +157,7 @@ namespace CelicniProfili.Models {
 
 
 	public class UserActivationMetadata {
-		
+
 		[Required]
 		public int UserId { get; set; }
 

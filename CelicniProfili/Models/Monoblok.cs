@@ -24,12 +24,14 @@ namespace CelicniProfili.Models
         public int ID_standard { get; set; }
         public string Naziv { get; set; }
         public int ID_tip { get; set; }
+        public int id_tehn { get; set; }
     
         public virtual I_geometrija I_geometrija { get; set; }
         public virtual I_karakteristike I_karakteristike { get; set; }
         public virtual standard standard { get; set; }
-        public virtual tip_profila tip_profila { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<profil> profil { get; set; }
+        public virtual tehnologija_monoblok tehnologija_monoblok { get; set; }
+        public virtual tip_monoblok tip_monoblok { get; set; }
     }
 }

@@ -5,25 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8aa636ef97fc4c97885c169e9ff2fcd8" Name="Diagram1">
-        <EntityTypeShape EntityType="ČeličniProfiliModel.I_geometrija" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.I_karakteristike" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.mon_opis" Width="1.5" PointX="3.375" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.Monoblok" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.monoblok_pozicije_ojačanja" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.ojačanje_opis" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.profil" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.Profil_I_karakteristike" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.standard" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.tip_profila" Width="1.5" PointX="3.375" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.UserActivation" Width="1.5" PointX="2.125" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.Users" Width="1.5" PointX="0.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.I_geometrija" Width="1.5" PointX="0.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.I_karakteristike" Width="1.5" PointX="0.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.mon_opis" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.Monoblok" Width="1.5" PointX="2.875" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.monoblok_pozicije_ojačanja" Width="1.5" PointX="7.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.ojačanje_opis" Width="1.5" PointX="5.125" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.profil" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.Profil_I_karakteristike" Width="1.5" PointX="0.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.standard" Width="1.5" PointX="5.375" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.UserActivation" Width="1.5" PointX="2.375" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.Users" Width="1.5" PointX="0.5" PointY="10.875" IsExpanded="true" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID__4222D4EF" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID__44FF419A" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID_sta__3F466844" ManuallyRouted="false" />
-        <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID_tip__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__profil__ID_monob__398D8EEE" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__profil__ID__4D94879B" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.Admin_SMTP_parameteres" Width="1.5" PointX="3.875" PointY="12.375" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.Admin_SMTP_parameteres" Width="1.5" PointX="4.25" PointY="10.875" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.tehnologija_monoblok" Width="1.5" PointX="2.75" PointY="1" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.tip_monoblok" Width="1.5" PointX="5.375" PointY="1" />
+        <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__id_teh__3C69FB99" />
+        <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

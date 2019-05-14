@@ -30,14 +30,26 @@ namespace CelicniProfili.Models {
 	[MetadataType(typeof(Profil_I_karakteristikeMetadata))]
 	public partial class Profil_I_karakteristike{ }
 
-	[MetadataType(typeof(tip_profilaMetadata))]
-	public partial class tip_profila { }
+	[MetadataType(typeof(tip_monoblokMetadata))]
+	public partial class tip_monoblok { }
+
+	[MetadataType(typeof(tehnologija_monoblokMetadata))]
+	public partial class tehnologija_monoblok { }
+
 
 	[MetadataType(typeof(UsersMetadata))]
-	public partial class Users { }
+	public partial class Users {
+		public Users () {
+			Name = "gonzo";
+			level = 1;
+			email = "bozo@ja.com";
+			pass = "______";
+		}
+	}
 
 	[MetadataType(typeof(UserActivationMetadata))]
 	public partial class UserActivation { }
+
 
 	[MetadataType(typeof(Admin_SMTP_parameteresMetaData))]
 	public partial class Admin_SMTP_parameteres { }

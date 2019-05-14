@@ -1,7 +1,37 @@
-﻿@{
+﻿@model string
+@{
     ViewBag.Title = "About";
 }
+
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
+
+@using (Html.BeginForm("About", "Users", FormMethod.Post)) {
+	<fieldset>
+
+		@if (@ViewBag.poruka != null) {
+
+		<div style="border: 1px solid red">
+			@ViewBag.poruka
+		</div>
+		}
+
+		<table>
+			<tr>
+				<td>Enter ID: </td>
+				<td><input type="text" name="Id" value=""/></td>
+			</tr>
+
+			<tr>
+				<td>Encrypted pass </td>
+				<td><input type="text" name="pass" value="@Model" /></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><input type="submit" value="Enkriptuj pass" /></td>
+			</tr>
+		</table>
+	</fieldset>
+}

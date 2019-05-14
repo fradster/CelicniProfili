@@ -34,9 +34,10 @@ namespace CelicniProfili.Models
         public virtual DbSet<profil> profil { get; set; }
         public virtual DbSet<Profil_I_karakteristike> Profil_I_karakteristike { get; set; }
         public virtual DbSet<standard> standard { get; set; }
-        public virtual DbSet<tip_profila> tip_profila { get; set; }
         public virtual DbSet<UserActivation> UserActivation { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Admin_SMTP_parameteres> Admin_SMTP_parameteres { get; set; }
+        public virtual DbSet<tehnologija_monoblok> tehnologija_monoblok { get; set; }
+        public virtual DbSet<tip_monoblok> tip_monoblok { get; set; }
     }
 }

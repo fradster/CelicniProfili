@@ -18,6 +18,13 @@
 			</div>
 		}
 
+		@{
+			string Name = ""; string pass = ""; string host = "";
+			if (ViewBag.flag == 1) {
+				Name = Model.UserName; pass = Model.password; host = Model.host;
+			}
+		}
+
 		<table>
 			<tr>
 				@Html.HiddenFor(model => model.Ind)
@@ -25,19 +32,19 @@
 
 			<tr>
 				<td>@Html.LabelFor(a => a.UserName)</td>
-				<td>@Html.TextBoxFor(a => a.UserName, new { @Value = Model.UserName, placeholder = "user@gmail.com" })</td>
+				<td>@Html.TextBoxFor(a => a.UserName, new { @Value = Name, placeholder = "user@gmail.com" })</td>
 				<td>@Html.ValidationMessageFor(a => a.UserName)</td>
 			</tr>
 
 			<tr>
 				<td>@Html.LabelFor(a => a.password)</td>
-				<td>@Html.TextBoxFor(a => a.password, new { @Value = Model.password})</td>
+				<td>@Html.TextBoxFor(a => a.password, new { @Value = pass })</td>
 				<td>@Html.ValidationMessageFor(a => a.password)</td>
 			</tr>
 
 			<tr>
 				<td>@Html.LabelFor(a => a.host)</td>
-				<td>@Html.TextBoxFor(a => a.host, new { @Value = Model.host, placeholder = "smtp.gmail.com" })</td>
+				<td>@Html.TextBoxFor(a => a.host, new { @Value = host, placeholder = "smtp.gmail.com" })</td>
 				<td>@Html.ValidationMessageFor(a => a.host)</td>
 			</tr>
 
