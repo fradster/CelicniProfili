@@ -5,37 +5,65 @@ namespace CelicniProfili.Models {
 	public class I_geometrijaMetadata {
 
 		[Required]
+		[Display(Name = "b [mm]")]
 		public double b { get; set; }
+
 		[Required]
+		[Display(Name = "h [mm]")]
 		public double h { get; set; }
+
 		[Required]
+		[Display(Name = "s [mm]")]
 		public double s { get; set; }
+
+		[Display(Name = "t [mm]")]
 		[Required]
 		public double t { get; set; }
 	}
 
 	public class I_karakteristikeMetadata {
 		[Required]
+		[Display(Name = "A [cm²]")]
 		public double A { get; set; }
+
 		[Required]
+		[Display(Name = "G [kg/m]")]
 		public double G { get; set; }
+
 		[Required]
+		[Display(Name = "Ix [cm^4]")]
 		public double Ix { get; set; }
+
 		[Required]
+		[Display(Name = "Wx [cm³]")]
 		public double Wx { get; set; }
+
 		[Required]
+		[Display(Name = "ix_jez [cm]")]
 		public double ix_jez { get; set; }
+
 		[Required]
+		[Display(Name = "Iy [cm^4]")]
 		public double Iy { get; set; }
+
 		[Required]
+		[Display(Name = "Wy [cm³]")]
 		public double Wy { get; set; }
+
 		[Required]
+		[Display(Name = "iy_jez [cm]")]
 		public double iy_jez { get; set; }
+
 		[Required]
+		[Display(Name = "Sx [cm³]")]
 		public double Sx { get; set; }
+
 		[Required]
+		[Display(Name = "s_x [cm]")]
 		public double s_x { get; set; }
+
 		[Required]
+		[Display(Name = "I_tor [cm^4]")]
 		public double I_tor { get; set; }
 	}
 
@@ -48,9 +76,6 @@ namespace CelicniProfili.Models {
 		public int ID_tip { get; set; }
 		[Required]
 		public string Naziv { get; set; }
-		[Required]
-		public string id_tehn { get; set; }
-
 	}
 
 	public class monoblok_pozicije_ojačanjaMetadata {
@@ -128,12 +153,21 @@ namespace CelicniProfili.Models {
 	}
 
 	public class tip_monoblokMetadata {
+		[Required]
 		public int id_tip { get; set; }
+
+		[Required]
 		public int tip { get; set; }
+
+		[Required]
+		public int id_tehn { get; set; }
 	}
 
 	public class tehnologija_monoblokMetadata {
+		[Required]
 		public int ID_tehn { get; set; }
+
+		[Required]
 		public int tehnologija { get; set; }
 	}
 

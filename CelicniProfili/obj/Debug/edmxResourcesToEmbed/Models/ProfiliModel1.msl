@@ -46,7 +46,6 @@
     <EntitySetMapping Name="Monoblok">
       <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
         <MappingFragment StoreEntitySet="Monoblok">
-          <ScalarProperty Name="id_tehn" ColumnName="id_tehn" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
@@ -156,6 +155,7 @@
     <EntitySetMapping Name="tip_monoblok">
       <EntityTypeMapping TypeName="ČeličniProfiliModel.tip_monoblok">
         <MappingFragment StoreEntitySet="tip monoblok">
+          <ScalarProperty Name="id_tehn" ColumnName="id_tehn" />
           <ScalarProperty Name="tip" ColumnName="tip" />
           <ScalarProperty Name="id_tip" ColumnName="id_tip" />
         </MappingFragment>

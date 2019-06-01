@@ -661,8 +661,7 @@ namespace CelicniProfili.Controllers{
 							VisiblesInd = new int[] { 3, 4 };
 							ViewBag.Poruka = String.Empty;
 
-							Users users = db.Users.Find(id);
-							db.Users.Remove(users);
+							db.Users.Remove(user1);
 							db.SaveChanges();
 
 							poruka = "Izbrisan User";
@@ -705,7 +704,7 @@ namespace CelicniProfili.Controllers{
 						string pass1 = encrypt.encryptPass(usr1.pass);
 						return View((object) pass1);
 					}
-					else 
+					else
 						ViewBag.poruka = "Nema tog usera";
 				}
 			}

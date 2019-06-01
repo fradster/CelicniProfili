@@ -1,0 +1,28 @@
+﻿@model CelicniProfili.Models.Monoblok
+
+@{
+    ViewBag.Title = "Delete Monoblok";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Obriši monoblok</h2>
+
+@if (@ViewBag.poruka != null) {
+
+<div style="border: 1px solid red">
+	@ViewBag.poruka
+</div>
+}
+
+<div>
+	@using (Html.BeginForm("DeleteConfirmed", "Monobloks", FormMethod.Post)) {
+		@Html.AntiForgeryToken()
+		
+		<div class="form-actions no-color">
+			<input type="submit" value="Izbriši" class="btn btn-info" />
+		
+			@Html.ActionLink("Cancel", "MonoblockList", "ProfiliMeni", new { poruka2 = "Monoblok nije obrisan" }, new { @class = "btn btn-info" })
+		
+		</div>
+	}
+</div>

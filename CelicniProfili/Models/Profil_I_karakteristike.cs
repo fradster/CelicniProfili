@@ -14,7 +14,7 @@ namespace CelicniProfili.Models
     
     public partial class Profil_I_karakteristike
     {
-				public int ID { get; set; }
+        public int ID { get; set; }
         public double A { get; set; }
         public double G { get; set; }
         public double Ix { get; set; }

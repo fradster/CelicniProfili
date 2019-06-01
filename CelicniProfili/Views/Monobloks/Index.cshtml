@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CelicniProfili.Models.Monoblok>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.I_geometrija.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.I_karakteristike.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.standard.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tip_monoblok.tip)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.I_geometrija.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.I_karakteristike.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.standard.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tip_monoblok.tip)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

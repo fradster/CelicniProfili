@@ -1,8 +1,4 @@
-﻿<<<<<<< HEAD
 ﻿# CelicniProfili
-=======
-# CelicniProfili
->>>>>>> 1567ef41d1865ab932b4fbf9861e0bea5c594c7d
 Projektni zadatak je formiranje baze čeličnih profila korišćenih u građevinskoj industriji, pregled geometrijskih i mehaničkih karakteristika preseka, kao i formiranje ojačanih preseka od osnovih, dodavanjem limova za ojačanje unutar predviđenog editora. Takođe, pohranivanje novo-dobijenih preseka u bazu i proračun njihovih karatkeristika. Pored toga, program treba da omogući logovanje na postojeće korisničke naloge, formiranje novih naloga, kao i administraciju naloga uz ovlaštenja admina.
 
 Scenario upotrebe je sledeći: korisnik se loguje na svoj nalog, nakon čega je upućen na korisnički panel gde može da odabere da menja svoje podatke (šifru, email) ili da pristupi bazi čeličnih profila. Ako ima nivo administratora, može da pristupi i listi svih korisnika, gde može da menja njihove podatke ili da ih briše. Novi korisnici mogu da otvore nov nalog, uz aktivaciju naloga preko e-mail poruke koju će sistem poslati.

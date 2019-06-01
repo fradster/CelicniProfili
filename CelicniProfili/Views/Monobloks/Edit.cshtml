@@ -1,0 +1,561 @@
+﻿@model CelicniProfili.ViewModels.modelMonoblokZaEdit
+
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+<script type='text/javascript'>
+	$(document).ready(function () {
+		// globalne promenjive
+		var svg1 = document.getElementById ('SVG_blok');
+		var svg_dim = svg1.getBoundingClientRect();
+		var center= [svg_dim.width/2, svg_dim.height/2];
+		var zoomFakt;
+		
+		generiši_blok();
+
+		///***********************************************
+		function generiši_blok() {
+			var paramsArr1 = povadi_sa_forma();//povadi parametre geometrije iz Forme
+
+			var pointsArr1 = konstruiši_poly(paramsArr1);//genriše tačke polinoma
+
+			var MonoPointsArr1 = simetričan_presek(pointsArr1);//iz tačaka donjeg levog ugla, konstruiše ceo presek, horizontalnom i vert. simetrijom
+
+			//kreira poliliniju
+			var polyline1= document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+			
+			polyline1.setAttribute("stroke", "black");
+			polyline1.setAttribute("stroke-width", "1.5");
+			polyline1.setAttribute("fill", "url(#grad1)");
+
+			svg1.appendChild(polyline1);
+			
+			zoomFakt = odrediZoom_faktor(MonoPointsArr1, svg_dim);
+			
+			for (var i1 = 0; i1 < MonoPointsArr1.length; i1++) {
+				var point1 = svg1.createSVGPoint();
+				
+				point1.x = center[0] + zoomFakt * MonoPointsArr1[i1][0];
+				point1.y = center[1] - zoomFakt * MonoPointsArr1[i1][1];
+
+				polyline1.points.appendItem(point1);
+			}
+
+			//ubaci osne linije
+			var osa_x = document.createElementNS("http://www.w3.org/2000/svg", "line");
+			osa_x.setAttribute("stroke", "green");
+			osa_x.setAttribute("stroke-width", "0.7");
+			osa_x.setAttribute("stroke-dasharray", "7, 7")
+			osa_x.setAttribute('x1', center[0] - 0.9 * svg_dim.width / 2);
+			osa_x.setAttribute('y1', center[1]);
+			osa_x.setAttribute('x2', center[0] + 0.9 * svg_dim.width / 2);
+			osa_x.setAttribute('y2', center[1]);
+
+			var osa_y = document.createElementNS("http://www.w3.org/2000/svg", "line");
+			osa_y.setAttribute("stroke", "green");
+			osa_y.setAttribute("stroke-width", "0.7");
+			osa_y.setAttribute("stroke-dasharray", "7, 7")
+			osa_y.setAttribute('x1', center[0]);
+			osa_y.setAttribute('y1', center[1] - 0.9 * svg_dim.height / 2);
+			osa_y.setAttribute('x2', center[0]);
+			osa_y.setAttribute('y2', center[1] + 0.9 * svg_dim.height / 2);
+
+			svg1.appendChild(osa_x);
+			svg1.appendChild(osa_y);
+
+
+			//ubaci kote
+			var br_segmenata = MonoPointsArr1.length;
+			var paramsArray = povadi_sa_forma();//[b, h, s, t, r1, r2]
+
+			//kota za stranicu b
+			var segment_b = [MonoPointsArr1[br_segmenata - 1], MonoPointsArr1[br_segmenata - 2]];
+			AddKotnaLinija(segment_b, 0, -5);//kotira donji ivicu b
+
+			//kota za visinu h
+			var segment_h = [MonoPointsArr1[14], MonoPointsArr1[br_segmenata - 2]];
+			AddKotnaLinija(segment_h, 0, -5);//kotira donji ivicu b
+
+			//kota za debljinu vrata s, na 40% visine vrata
+			var st1 = MonoPointsArr1[6]; var st2 = MonoPointsArr1[br_segmenata - 8];
+			st1[1] = st1[1] + (MonoPointsArr1[7][1] - MonoPointsArr1[6][1]) * 0.4;
+			st2[1] = st2[1] + (MonoPointsArr1[br_segmenata - 9][1] - MonoPointsArr1[br_segmenata - 8][1]) * 0.4;
+
+			//var segment_s = [MonoPointsArr1[3], MonoPointsArr1[br_segmenata - 8]];
+			AddKotnaLinija([st1, st2], 6, -5);//kotira donji ivicu b
+
+			//doda pomoćnu liniju za debljinu nožice t, na rastojanju od b/4 od vertikalne osovine
+			var tt1=[paramsArray[0] / 4, - paramsArray[1]/2];
+			var tt2=[paramsArray[0] / 4, - paramsArray[1]/2 + paramsArray[3]];
+			drawGLine(tt1, tt2, "green", 0.4)
+
+			//kota za debljinu nožice t, na rastojanju od b/4 od vertikalne 
+			AddKotnaLinija([tt1, tt2], 8, -5);
+		}
+
+		//*************************************************
+		function odrediZoom_faktor (pointsArray1, svg_dim) {
+			//pointsArray1 je 2-D niz tačaka (samo jedna strana simetričnog nosača i po x i po y osi
+			//avg_dim je svg1.getBoundingClientRect() objekt sa width i height atributima
+
+			arrLen= pointsArray1.length;
+	
+			var x_arr=[]; var y_arr=[];
+			//max dimenzije elementa:
+			for (var i1 = 0; i1< arrLen; i1++) {
+				x_arr[i1]= pointsArray1[i1][0];
+				y_arr[i1]= pointsArray1[i1][1];
+			}
+			
+			with(Math){
+				//množim sa 2 zbog simetr. preseka
+				var dx= max(abs(...x_arr))*2;
+				var dy= max(abs(...y_arr))*2;
+
+				var zoomFakt= min (svg_dim.width/ dx, svg_dim.height/dy)* .8;
+			}
+
+			return zoomFakt;
+		}
+
+		//***************************************************
+		function konstruiši_poly (paramsArray1) {
+			//paramsArray1 je skup od 6 brojeva [b, h, s, t, r1,r2] sve u mm
+			//vraća pointsArr1 od 7 tačaka
+			var b= paramsArray1[0];	var h= paramsArray1[1];
+			var s= paramsArray1[2];	var t= paramsArray1[3];
+			var r1= paramsArray1[4]; var r2= paramsArray1[5];
+
+			var Points =[];
+
+			with (Math) {
+				var alfa = PI / 180 * 12.6; var beta = PI / 2 - alfa;
+
+				var c = r2*cos(alfa);	var d = (b/4 - r2)*tan(alfa);
+				var y2 = t- r2*cos(alfa) - (b/4-r2)*tan(alfa);
+				var e= d/tan(alfa); var b2= r1 * sin(alfa);
+				var e2= b/4 - (s/2+r1-b2); var c2= e2*tan(alfa);
+				var y6= -(h/2-(t + c2 + r1*cos(alfa)));
+				
+				//vraća 2D array, skup tačaka
+				var pointsArr1= [];
+				pointsArr1 [0]= [-b/2, -h/2];
+				pointsArr1 [1]= [-b/2, -(h/2-y2)];
+				pointsArr1 [2]= [-(b/2-r2*(1-cos(beta/2))), -(h/2-y2-r2*sin(beta/2))];
+				pointsArr1 [3]= [-(b/4+e), -(h/2-y2-c)];
+				pointsArr1 [4]= [-(s/2+r1-b2), -(h/2-(t+c2))];
+				pointsArr1 [5]= [-(s/2+r1*(1-cos(beta/2))), y6-r1*sin(beta/2)];
+				pointsArr1 [6]= [-s/2, y6];
+			}
+
+			return pointsArr1;
+		}
+
+		//*************************************************
+		function simetričan_presek(pointsArr) {
+			//pointsArr je skup tačaka opisam polilinije iz tačaka donjeg levog ugla. Konstruiše ceo presek, horizontalnom i vert. simetrijom, vraća array tačaka:
+
+			//verikalno preslikavanje:
+			SimVertArray = dupliraj_reverzno(pointsArr, 1, -1);			
+
+			//horizontalno preslikavanje:
+			var SimArray = dupliraj_reverzno(SimVertArray, -1, 1);
+
+			//dodaj zadnju tačku za zatvorenu poliliniju
+			SimArray.push(pointsArr[0]);
+
+			return SimArray;
+		}
+
+		//*************************************************
+		function povadi_sa_forma (){
+			//čita podatke sa forma i vraća array sa parametrima geometrije monobloka
+			// [b, h, s, t, r1, r2]
+			var b= parseFloat(document.getElementById("b_box").value);
+			var h= parseFloat(document.getElementById("h_box").value);
+			var s= parseFloat(document.getElementById("s_box").value);
+			var t= parseFloat(document.getElementById("t_box").value);
+			var r1= parseFloat(document.getElementById("r1_box").value);
+			var r2= parseFloat(document.getElementById("r2_box").value);
+
+			var paramsArray= [b, h, s, t, r1, r2];
+			return paramsArray;
+		}
+
+		//*****************************************************
+		function dupliraj_reverzno(pointsArr, signx, signy) {
+			//zadati skup tačaka preslika simetrično i obrne redolsed simetričnom delu. sign1 i sign2 su znakovi preslikanog dela za x i y koordinate tačaka
+			var br_tačaka = pointsArr.length;
+			var SimArray = pointsArr;
+
+			for (var i1 = 0; i1 < br_tačaka; i1++) {
+				SimArray [br_tačaka + i1] = [signx * pointsArr[br_tačaka - 1 - i1][0], signy * pointsArr[br_tačaka - 1 - i1][1]];
+			}
+			return SimArray;
+		}
+
+		//*****************************************************
+		function Decart2Polar(point1, point2) {
+			//pretvara koordinate para tačaka iz dekartovog sistema u polarni, point1 i 2 su array [x,y]
+			//vraća ugao [rad] i intenzitet, početna tačka je point 1
+
+			var x1 = point1[0]; var x2 = point2[0];
+			var y1 = point1[1]; var y2 = point2[1];
+			with (Math) {
+
+				var angle = atan2((y2 - y1), (x2 - x1));//rad
+				//var svgDeg = atan2 * 57.2957795
+				////===atan2 serves minus value at>270 deg---
+				//if (svgDeg < 0) svgDeg = svgDeg + 360
+
+				//if (svgDeg <= 270)
+				//	var deg = 90 + svgDeg
+				//else
+				//	var deg = svgDeg - 270
+
+				var len = sqrt(pow((x2 - x1),2) + pow((y2 - y1),2));
+			}
+
+			var line = [len, angle];
+			return line;
+		}
+
+		//*****************************************************
+		function Polar2Decart(len, alfa) {
+			//pretvara pravac (alfa [rad]) i dužinu len u decartove dužine dxi dy
+			//vraća array [dx, dy]
+
+			var dx = len * Math.cos(alfa); var dy = len * Math.sin(alfa);
+			return [dx, dy];
+		}
+
+
+		//**************************************************
+		function AddKotnaLinija(segment1, textPos, dimPos) {
+			//konstruiše kotnu liniju
+			//segment1= [[x1,y1],[x2,y2]] duž koja se kotira
+			//textPos- pozicija teksta vrednost pomerena od sredine kote na levo (-) ili na desno (+), npr. textPos= -5
+			//dimPos : broj pixela i pravac položaja kote u odnosu na kotiranu liniju. dimPos= 5: 5 pixela iznad, dimPos= -6: 6 pixela ispod
+			
+			var x1l = segment1[0][0]; var x2l = segment1[1][0];
+			var y1l = segment1[0][1]; var y2l = segment1[1][1];
+
+			if (x2l < x1l) {
+				var prim = x2l; x2l = x1l; x1l = prim;
+				var prim = y2l; y2l = y1l; y1l = prim;
+			}
+
+			if (x2l == x1l && y2l < y1l) {
+				var prim = x2l; x2l = x1l; x1l = prim;
+				var prim = y2l; y2l = y1l; y1l = prim;
+			}
+
+			var LinePol = Decart2Polar([x1l, y1l], [x2l, y2l]);//nađe ugao nagiba i dužinu
+			var alfa= LinePol[1];
+
+
+			//dodaje osnovnu kotnu liniju
+			var beta = alfa + Math.PI / 2;// pravac upravan na liniju
+			var distKota = Polar2Decart(dimPos, beta);//[dx, dy] distanca od linije u pravcu upravnom na nju
+			var dx = distKota[0]; var dy = distKota[1];
+			var FirstpointDim = [x1l + dx, y1l + dy]; //početna tačka kote
+			var SecondpointDim = [x2l + dx, y2l + dy]; //krajnja tačka kote
+
+			drawGLine(FirstpointDim, SecondpointDim, "red", 0.5);
+			
+			//deklariše promenjive za granične pomoćne linije
+			var x1k; var x2k; var y1k; var y2k;
+			var distGran;
+			var FirstPointGran1; var FirstPointGran2;
+			var SecondPointGran1; var SecondPointGran2;
+
+
+			//dodaje granične pomoćne linije
+			x1k = FirstpointDim[0]; y1k = FirstpointDim[1];
+			x2k = SecondpointDim[0]; y2k = SecondpointDim[1];
+			
+			distGran = Polar2Decart(-2, beta);//[dx, dy] distanca od početne tačke kotne pomoćne linije  u pravcu upravnom na nju, na "dole"
+			dx = distGran[0]; dy = distGran[1];//rastojanja u decartovom sistemu
+			FirstPointGran1 = [x1k + dx, y1k + dy];//donja tačka prve granične linije
+			FirstPointGran2 = [x2k + dx, y2k + dy];//donja tačka druge granične linije
+
+			distGran = Polar2Decart(2, beta);//[dx, dy] distanca od početne tačke kotne pomoćne linije  u pravcu upravnom na nju,  na "gore"
+			dx = distGran[0]; dy = distGran[1];//rastojanja u decartovom sistemu
+			SecondPointGran1 = [x1k + dx, y1k + dy];//gornja tačka prve granične linije
+			SecondPointGran2 = [x2k + dx, y2k + dy];//gornja tačka druge granične linije
+
+			drawGLine(FirstPointGran1, SecondPointGran1, "red", 0.5);
+			drawGLine(FirstPointGran2, SecondPointGran2, "red", 0.5);
+
+
+			//dodaje kose graničnike
+			distGran = Polar2Decart(-2 * Math.SQRT2, beta - Math.PI / 4);////[dx, dy]
+
+			dx = distGran[0]; dy = distGran[1];
+			FirstPointGran1 = [x1k + dx, y1k + dy];//donja tačka prve granične linije
+			FirstPointGran2 = [x2k + dx, y2k + dy];//donja tačka druge granične linije
+
+			distGran = Polar2Decart(2 * Math.SQRT2, beta - Math.PI / 4);
+			dx = distGran[0]; dy = distGran[1]
+			SecondPointGran1 = [x1k + dx, y1k + dy]
+			SecondPointGran2 = [x2k + dx, y2k + dy]
+
+			drawGLine(FirstPointGran1, SecondPointGran1, "red", 0.5);
+			drawGLine(FirstPointGran2, SecondPointGran2, "red", 0.5);
+
+
+			//dodaje tekst na kotnu liniju
+			var KotaText = Math.round(LinePol[0] * 10) / 10;//skrati na 1-nu decimalu.
+
+			var SredKotneLin = [(x1k + x2k) / 2, (y1k + y2k) / 2];// [x, y] središna tačka kotne linije
+			distGran = Polar2Decart(0.7, beta);//[dx, dy]
+			var distdužLin = Polar2Decart(-3 + textPos, alfa);
+
+			dx = distGran[0] + distdužLin[0];
+			dy = distGran[1] + distdužLin[1];
+
+			var PočTexta = [SredKotneLin[0] + dx, SredKotneLin[1] + dy];//centar donje linije teksta
+
+			var text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+			pointnaEkranu = [center[0] + zoomFakt * PočTexta[0], center[1] - zoomFakt * PočTexta[1] ]
+
+			text1.setAttribute('x', pointnaEkranu[0]);
+			text1.setAttribute('y', pointnaEkranu[1]);
+			text1.setAttribute('fill', 'red');
+			text1.textContent = KotaText.toString();
+
+			var rotate_str= 'rotate (' + (-alfa/ Math.PI * 180) + ', ' +  pointnaEkranu[0] + ', ' + pointnaEkranu[1] +')';
+			text1.setAttribute('transform', rotate_str);
+			svg1.appendChild(text1);
+
+		}
+
+		//**************************************************
+		function drawGLine(point1, point2, stroke1, width1) {
+			//dodaje liniju u nannačenom stilu od point 1 do point2
+			//stroke1 je string sa bojom npr. "red"
+			//width1 je debljina linije
+			var Dimline = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+			Dimline.setAttribute("stroke", stroke1);
+			Dimline.setAttribute("stroke-width", width1);
+			Dimline.setAttribute('x1', center[0] + zoomFakt * point1[0]);
+			Dimline.setAttribute('y1', center[1] - zoomFakt * point1[1]);
+			Dimline.setAttribute('x2', center[0] + zoomFakt * point2[0]);
+			Dimline.setAttribute('y2', center[1] - zoomFakt * point2[1]);
+
+			svg1.appendChild(Dimline);
+		}
+
+	});
+</script>
+
+
+@{
+	ViewBag.Title = "Edit Monoblok";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+	<h2>Edit Monoblok</h2>
+	<p class="lead">@ViewBag.Status : @ViewBag.User</p>
+</div>
+
+<div>
+	<svg width="300" height="400" border="2" id="SVG_blok">
+		<defs>
+			<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+				<stop offset="0%" style="stop-color:#d1d1d1; stop-opacity:1" />
+				<stop offset="100%" style="stop-color:#f3f3f3; stop-opacity:1" />
+			</linearGradient>
+		</defs>
+	</svg>
+</div>
+<hr>
+	
+@using (Html.BeginForm()) {
+
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	if (@ViewBag.poruka != null) {
+		<div style="border: 1px solid red">
+			@ViewBag.poruka
+		</div>
+	}
+	<hr>
+
+	<div class="form-control">
+
+		<h4>Monoblok</h4>
+		<hr />
+
+		@Html.HiddenFor(model => model.mblok1.ID)
+
+		<table class="table table-hover table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>@Html.LabelFor(model => model.mblok1.Naziv) </th>
+					<th><Html.Label class="control-label col-md-2">Naziv Standarda</Html.Label> </th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>@Html.TextBoxFor(model => model.mblok1.Naziv)</td>
+					<td>@Html.DropDownListFor(model => model.SelectedStandard1, Model.mStand1) </td>
+				</tr>
+			</tbody>
+		</table>
+		<hr>
+
+		<table>
+			<thead class="thead-dark">
+				<tr>
+					<th colspan="2"><Html.Label class="control-label col-md-2">Geometrija preseka</Html.Label></th>
+
+					<th>   </th>
+
+					<th colspan="2"><Html.Label class="control-label col-md-2">Mehaničke karakterisitke preseka</Html.Label> </th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>@Html.LabelFor(model => model.monoGeom1.b)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoGeom1.b, htmlAttributes: new {id = "b_box"})</td>
+
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.A)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.A)</td>
+				</tr>
+
+				<tr>
+					<td>@Html.LabelFor(model => model.monoGeom1.h)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoGeom1.h, htmlAttributes: new { id = "h_box" })</td>
+
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.G)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.G)</td>
+				</tr>
+
+				<tr>
+					<td>@Html.LabelFor(model => model.monoGeom1.s)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoGeom1.s, htmlAttributes: new { id = "s_box" })</td>
+
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.Ix)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.Ix)</td>
+				</tr>
+
+				<tr>
+					<td>@Html.LabelFor(model => model.monoGeom1.t)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoGeom1.t, htmlAttributes: new { id = "t_box" })</td>
+
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.Wx)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.Wx)</td>
+				</tr>
+
+				<tr>
+					<td>@Html.LabelFor(model => model.monoGeom1.r1)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoGeom1.r1, htmlAttributes: new { id = "r1_box" })</td>
+
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.ix_jez)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.ix_jez)</td>
+				</tr>
+
+				<tr>
+					<td>@Html.LabelFor(model => model.monoGeom1.r2)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoGeom1.r2, htmlAttributes: new { id = "r2_box" })</td>
+
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.Iy)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.Iy)</td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.Wy)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.Wy)</td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.iy_jez)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.iy_jez)</td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.Sx)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.Sx)</td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.s_x)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.s_x)</td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td> | </td>
+
+					<td>@Html.LabelFor(model => model.monoKarakt1.I_tor)</td>
+
+					<td>@Html.TextBoxFor(model => model.monoKarakt1.I_tor)</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<hr>
+}
+
+@*<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Save" class="btn btn-default" />
+		</div>
+	</div>*@
+
+
+@*<div>
+		@Html.ActionLink("Back to List", "Index")
+	</div>*@

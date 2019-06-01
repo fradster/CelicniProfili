@@ -1,0 +1,59 @@
+﻿@model CelicniProfili.Models.Monoblok
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Monoblok</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_geometrija.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_geometrija.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.I_karakteristike.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.I_karakteristike.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.standard.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.standard.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tip_monoblok.tip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tip_monoblok.tip)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -159,6 +159,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\MonobloksController.cs" />
     <Compile Include="Controllers\ProfiliMeniController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -196,6 +197,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProfiliModel1.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProfiliModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProfiliModel1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProfiliModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -220,6 +226,9 @@
       <DependentUpon>ProfiliModel1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\modelMonoblokZaEdit.cs" />
+    <Compile Include="ViewModels\ModelZaPrikazMonobloka_u_listi.cs" />
+    <Compile Include="ViewModels\MonoblokViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Baza\formiranje.sql" />
@@ -290,10 +299,14 @@
     <Content Include="Views\Users\UserList.cshtml" />
     <Content Include="Views\ProfiliMeni\Meni.cshtml" />
     <Content Include="Views\Users\SMTParams.cshtml" />
+    <Content Include="Views\ProfiliMeni\MonoblockList.cshtml" />
+    <Content Include="Views\Monobloks\Create.cshtml" />
+    <Content Include="Views\Monobloks\Delete.cshtml" />
+    <Content Include="Views\Monobloks\Details.cshtml" />
+    <Content Include="Views\Monobloks\Edit.cshtml" />
+    <Content Include="Views\Monobloks\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Profili\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

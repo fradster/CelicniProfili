@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <body>
 
 	<div class="jumbotron">
@@ -18,7 +19,9 @@
 	</div>
 	}
 
-	@Html.ActionLink("Lista Monoblokova", "MonoblockList", "ProfiliMeni", new { area =""}, new { @class = "btn btn-info btn-sm" })
+	@Html.ActionLink("Lista Monoblokova", "MonoblockList", "ProfiliMeni", new { area = "" }, new { @class = "btn btn-info btn-sm" })
+
+	@Html.ActionLink("Back", "UserPanel", "Users", new { area =""}, new { @class = "btn btn-info btn-sm" })
 
 
 </body>

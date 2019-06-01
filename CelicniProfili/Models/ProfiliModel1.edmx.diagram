@@ -13,19 +13,25 @@
         <EntityTypeShape EntityType="ČeličniProfiliModel.ojačanje_opis" Width="1.5" PointX="5.125" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="ČeličniProfiliModel.profil" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ČeličniProfiliModel.Profil_I_karakteristike" Width="1.5" PointX="0.5" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.standard" Width="1.5" PointX="5.375" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.standard" Width="1.5" PointX="5.375" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="ČeličniProfiliModel.UserActivation" Width="1.5" PointX="2.375" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ČeličniProfiliModel.Users" Width="1.5" PointX="0.5" PointY="10.875" IsExpanded="true" />
-        <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID__4222D4EF" ManuallyRouted="true" >
+          <ConnectorPoint PointX="2" PointY="3.079091296875" />
+          <ConnectorPoint PointX="3.072916666666667" PointY="3.079091296875" />
+          <ConnectorPoint PointX="3.072916666666667" PointY="3.3611001279687502" />
+          <ConnectorPoint PointX="3.0765623076150561" PointY="3.3611001279687502" />
+          <ConnectorPoint PointX="3.0765623076150561" PointY="3.5000000000000013" />
+        </AssociationConnector>
         <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID__44FF419A" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID_sta__3F466844" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__profil__ID_monob__398D8EEE" ManuallyRouted="false" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__profil__ID__4D94879B" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ČeličniProfiliModel.Admin_SMTP_parameteres" Width="1.5" PointX="4.25" PointY="10.875" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.tehnologija_monoblok" Width="1.5" PointX="2.75" PointY="1" />
-        <EntityTypeShape EntityType="ČeličniProfiliModel.tip_monoblok" Width="1.5" PointX="5.375" PointY="1" />
-        <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__id_teh__3C69FB99" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.tehnologija_monoblok" Width="1.5" PointX="5.375" PointY="1" />
+        <EntityTypeShape EntityType="ČeličniProfiliModel.tip_monoblok" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844" />
+        <AssociationConnector Association="ČeličniProfiliModel.FK__tip_monob__id_te__6E01572D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

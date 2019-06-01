@@ -56,7 +56,6 @@
     <Property Name="ID_standard" Type="int" Nullable="false" />
     <Property Name="Naziv" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="ID_tip" Type="int" Nullable="false" />
-    <Property Name="id_tehn" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="monoblok_pozicije_ojačanja">
     <Key>
@@ -128,6 +127,7 @@
     </Key>
     <Property Name="id_tip" Type="int" Nullable="false" />
     <Property Name="tip" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="id_tehn" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="UserActivation">
     <Key>
@@ -182,18 +182,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Monoblok__id_teh__3C69FB99">
-    <End Role="tehnologija monoblok" Type="Self.tehnologija monoblok" Multiplicity="1" />
-    <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tehnologija monoblok">
-        <PropertyRef Name="ID_tehn" />
-      </Principal>
-      <Dependent Role="Monoblok">
-        <PropertyRef Name="id_tehn" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Monoblok__ID_tip__3F466844">
     <End Role="tip monoblok" Type="Self.tip monoblok" Multiplicity="1" />
     <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
@@ -230,6 +218,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__tip monob__id_te__6E01572D">
+    <End Role="tehnologija monoblok" Type="Self.tehnologija monoblok" Multiplicity="1" />
+    <End Role="tip monoblok" Type="Self.tip monoblok" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tehnologija monoblok">
+        <PropertyRef Name="ID_tehn" />
+      </Principal>
+      <Dependent Role="tip monoblok">
+        <PropertyRef Name="id_tehn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ČeličniProfiliModelStoreContainer">
     <EntitySet Name="Admin SMTP parameteres" EntityType="Self.Admin SMTP parameteres" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="I-geometrija" EntityType="Self.I-geometrija" Schema="dbo" store:Type="Tables" />
@@ -257,10 +257,6 @@
       <End Role="standard" EntitySet="standard" />
       <End Role="Monoblok" EntitySet="Monoblok" />
     </AssociationSet>
-    <AssociationSet Name="FK__Monoblok__id_teh__3C69FB99" Association="Self.FK__Monoblok__id_teh__3C69FB99">
-      <End Role="tehnologija monoblok" EntitySet="tehnologija monoblok" />
-      <End Role="Monoblok" EntitySet="Monoblok" />
-    </AssociationSet>
     <AssociationSet Name="FK__Monoblok__ID_tip__3F466844" Association="Self.FK__Monoblok__ID_tip__3F466844">
       <End Role="tip monoblok" EntitySet="tip monoblok" />
       <End Role="Monoblok" EntitySet="Monoblok" />
@@ -272,6 +268,10 @@
     <AssociationSet Name="FK__profil__ID_monob__398D8EEE" Association="Self.FK__profil__ID_monob__398D8EEE">
       <End Role="Monoblok" EntitySet="Monoblok" />
       <End Role="profil" EntitySet="profil" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tip monob__id_te__6E01572D" Association="Self.FK__tip monob__id_te__6E01572D">
+      <End Role="tehnologija monoblok" EntitySet="tehnologija monoblok" />
+      <End Role="tip monoblok" EntitySet="tip monoblok" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

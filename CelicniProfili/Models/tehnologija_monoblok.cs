@@ -17,13 +17,13 @@ namespace CelicniProfili.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tehnologija_monoblok()
         {
-            this.Monoblok = new HashSet<Monoblok>();
+            this.tip_monoblok = new HashSet<tip_monoblok>();
         }
     
         public int ID_tehn { get; set; }
         public string tehnologija { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Monoblok> Monoblok { get; set; }
+        public virtual ICollection<tip_monoblok> tip_monoblok { get; set; }
     }
 }
