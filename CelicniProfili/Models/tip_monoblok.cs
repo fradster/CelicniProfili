@@ -14,18 +14,10 @@ namespace CelicniProfili.Models
     
     public partial class tip_monoblok
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tip_monoblok()
-        {
-            this.Monoblok = new HashSet<Monoblok>();
-        }
-    
         public int id_tip { get; set; }
         public string tip { get; set; }
         public int id_tehn { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Monoblok> Monoblok { get; set; }
         public virtual tehnologija_monoblok tehnologija_monoblok { get; set; }
     }
 }

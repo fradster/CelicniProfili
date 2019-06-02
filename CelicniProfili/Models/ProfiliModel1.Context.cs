@@ -27,9 +27,7 @@ namespace CelicniProfili.Models
     
         public virtual DbSet<I_geometrija> I_geometrija { get; set; }
         public virtual DbSet<I_karakteristike> I_karakteristike { get; set; }
-        public virtual DbSet<mon_opis> mon_opis { get; set; }
         public virtual DbSet<Monoblok> Monoblok { get; set; }
-        public virtual DbSet<monoblok_pozicije_ojačanja> monoblok_pozicije_ojačanja { get; set; }
         public virtual DbSet<ojačanje_opis> ojačanje_opis { get; set; }
         public virtual DbSet<profil> profil { get; set; }
         public virtual DbSet<Profil_I_karakteristike> Profil_I_karakteristike { get; set; }

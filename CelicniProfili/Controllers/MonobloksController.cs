@@ -99,25 +99,34 @@ namespace CelicniProfili.Controllers
 			}
 		}
 
-		// POST: Monobloks/Edit/5
-		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
-		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult Edit([Bind(Include = "ID,ID_standard,Naziv,ID_tip")] Monoblok monoblok)
-		//{
-		//	if (ModelState.IsValid)
-		//	{
-		//		db.Entry(monoblok).State = EntityState.Modified;
-		//		db.SaveChanges();
-		//		return RedirectToAction("Index");
-		//	}
-		//	ViewBag.ID = new SelectList(db.I_geometrija, "ID", "ID", monoblok.ID);
-		//	ViewBag.ID = new SelectList(db.I_karakteristike, "ID", "ID", monoblok.ID);
-		//	ViewBag.ID_standard = new SelectList(db.standard, "Id_standard", "Naziv", monoblok.ID_standard);
-		//	ViewBag.ID_tip = new SelectList(db.tip_monoblok, "id_tip", "tip", monoblok.ID_tip);
-		//	return View(monoblok);
-		//}
+		//*********************************
+		//** Editovanje Monobloka POST  ***
+		//** Monobloks/Edit/5						***
+		//*********************************
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit(modelMonoblokZaEdit MblokEdit1)
+		{
+			if (ModelState.IsValid) {
+				using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
+			
+					Monoblok mblok1 = MblokEdit1.mblok1;
+					mblok1.ID_standard = MblokEdit1.SelectedStandard1;
+
+					I_geometrija monoGeom1 = MblokEdit1.monoGeom1;
+					I_karakteristike monoKarakt1 = MblokEdit1.monoKarakt1;
+
+					db.Entry(mblok1).State = EntityState.Modified;
+					db.Entry(monoGeom1).State = EntityState.Modified;
+					db.Entry(monoKarakt1).State = EntityState.Modified;
+					db.SaveChanges();
+
+					return RedirectToAction("MonoblockList", "ProfiliMeni", new { poruka2 = "Blok uspešno izmenjen" });
+				}
+			}
+			ViewBag.poruka = "Model bind error";
+			return View();
+		}
 
 		//******************************
 		//**Brisanje Monobloka GET***

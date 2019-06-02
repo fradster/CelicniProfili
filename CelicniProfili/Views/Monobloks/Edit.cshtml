@@ -15,7 +15,13 @@
 
 		///***********************************************
 		function generiši_blok() {
-			var paramsArr1 = povadi_sa_forma();//povadi parametre geometrije iz Forme
+			
+			//obriši svg blok
+			while (svg1.lastChild) {
+				svg1.removeChild(svg1.lastChild);
+			};
+			
+			var paramsArr1 = povadi_sa_forma();//povadi parametre geometrije iz Forme [b, h, s, t, r1, r2]
 
 			var pointsArr1 = konstruiši_poly(paramsArr1);//genriše tačke polinoma
 
@@ -66,7 +72,6 @@
 
 			//ubaci kote
 			var br_segmenata = MonoPointsArr1.length;
-			var paramsArray = povadi_sa_forma();//[b, h, s, t, r1, r2]
 
 			//kota za stranicu b
 			var segment_b = [MonoPointsArr1[br_segmenata - 1], MonoPointsArr1[br_segmenata - 2]];
@@ -85,12 +90,42 @@
 			AddKotnaLinija([st1, st2], 6, -5);//kotira donji ivicu b
 
 			//doda pomoćnu liniju za debljinu nožice t, na rastojanju od b/4 od vertikalne osovine
-			var tt1=[paramsArray[0] / 4, - paramsArray[1]/2];
-			var tt2=[paramsArray[0] / 4, - paramsArray[1]/2 + paramsArray[3]];
+			var tt1=[paramsArr1[0] / 4, - paramsArr1[1]/2];
+			var tt2=[paramsArr1[0] / 4, - paramsArr1[1]/2 + paramsArr1[3]];
 			drawGLine(tt1, tt2, "green", 0.4)
 
 			//kota za debljinu nožice t, na rastojanju od b/4 od vertikalne 
 			AddKotnaLinija([tt1, tt2], 8, -5);
+
+			//radijus-kota za r1, gornji desni ugao
+			var b = paramsArr1[0]; var h = paramsArr1[1];
+			var s = paramsArr1[2]; var t = paramsArr1[3];
+			var r1 = paramsArr1[4]; var r2 = paramsArr1[5];
+			
+			with (Math) {
+				var alfa1 = 12.6 * PI / 180;
+				var b2 = r1 * sin(alfa1);
+				var e2 = b / 4 - (s / 2 + r1 - b2);
+				var c2 = e2 * tan(alfa1);
+	
+				var pointc1 =[
+					(s/2+r1),
+					(h/2-(t+c2+r1*cos(alfa1)))
+				];
+				var beta1 = (3 * PI / 4 + alfa1 /2) * 180 / PI;
+			}
+			addRadiusDim(pointc1, beta1, r1, "r1=");
+
+			//radijus-kota za r2, donji levi ugao
+			with (Math) {
+				var y2= t - r2 * cos(alfa1)- (b/4 - r2)*tan(alfa1);
+				var pointc2 = [
+					-(b/2 - r2),
+					-(h / 2 - y2)
+				];
+				var beta2 = (3 * PI / 4 + alfa1 / 2) * 180 / PI;
+			}
+			addRadiusDim(pointc2, beta2, r2, "r2=");
 		}
 
 		//*************************************************
@@ -204,15 +239,6 @@
 			with (Math) {
 
 				var angle = atan2((y2 - y1), (x2 - x1));//rad
-				//var svgDeg = atan2 * 57.2957795
-				////===atan2 serves minus value at>270 deg---
-				//if (svgDeg < 0) svgDeg = svgDeg + 360
-
-				//if (svgDeg <= 270)
-				//	var deg = 90 + svgDeg
-				//else
-				//	var deg = svgDeg - 270
-
 				var len = sqrt(pow((x2 - x1),2) + pow((y2 - y1),2));
 			}
 
@@ -328,7 +354,6 @@
 			var rotate_str= 'rotate (' + (-alfa/ Math.PI * 180) + ', ' +  pointnaEkranu[0] + ', ' + pointnaEkranu[1] +')';
 			text1.setAttribute('transform', rotate_str);
 			svg1.appendChild(text1);
-
 		}
 
 		//**************************************************
@@ -348,7 +373,99 @@
 			svg1.appendChild(Dimline);
 		}
 
+		//*****************************************************
+		function addRadiusDim(point1, beta, value, naziv) {
+			//dodaje oznaku radijusa krivine
+			//point1 - centar krivine
+			//beta [deg] ( u granicama +- 180) ugao pravca radijusa u odnosu na x osu, CCW (ugao je u realnom sistemu gde je Y osa okrenuta na gore, ne u obrnutom SVG sistemu)
+			//dužina radijusa (r1)
+			//naziv -tekst koji stoji pre vrednosti ("r1= ")
+
+			//početna tačka u koordinatnom sistemu SVGa (obrnuta y osa i centar u sredini)
+			var point1_SysCoor = [
+				center[0] + zoomFakt * point1[0],
+				center[1] - zoomFakt * point1[1]
+			];
+			
+			//dodaj grupu koja obuhvata celu kotnu liniju sa tesktom
+			var DimGroup1 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+			SVG_blok.appendChild(DimGroup1);
+
+			//DimGroup1.setAttribute('transform', 'rotate (12,' + point1[0] + ', ' + point1[1] + ')');
+
+			//dodaj grupu koja obuhvata samo kotnu liniju sa strelicama
+
+			var DimGroup2 = document.createElementNS("http://www.w3.org/2000/svg", "g");
+			DimGroup1.appendChild(DimGroup2)
+
+
+			//dodaj horizontalnu liniju na desno
+			var line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+			line1.setAttribute("stroke", "red");
+			line1.setAttribute("stroke-width", 0.5);
+			line1.setAttribute('x1', point1_SysCoor[0]);
+			line1.setAttribute('y1', point1_SysCoor[1]);
+			line1.setAttribute('x2', point1_SysCoor[0] + zoomFakt * value);
+			line1.setAttribute('y2', point1_SysCoor[1]);
+
+			DimGroup2.appendChild(line1);
+
+			//dodaj poliliniju za strelicu
+			var strela1 = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+			strela1.setAttribute ("stroke", "red");
+			strela1.setAttribute("fill", "none");
+			strela1.setAttribute ("stroke-width", 0.5);
+
+			var srtLen = 1.6;//dužina krakova strelice
+			var PointArr11 = [
+				[point1[0] + value - 0.83 * srtLen, point1[1] + 0.44 * srtLen],
+				[point1[0] + value, point1[1]],
+				[point1[0] + value - 0.83 * srtLen, point1[1] - 0.44 * srtLen]];
+			
+			for (var i1 = 0; i1 < PointArr11.length; i1++) {
+				var point1 = svg1.createSVGPoint();
+				point1.x = center[0] + zoomFakt * PointArr11[i1][0];
+				point1.y = center[1] - zoomFakt * PointArr11[i1][1];
+
+				strela1.points.appendItem(point1);
+			}
+
+			DimGroup2.appendChild(strela1);
+
+			var tekstOffset = 18;// početak teksta u odnsu na point1 na levo
+			var beta_rot = beta;// ugao rotacije
+
+			//obrni Grup2 ako je beta >90 ili < -90
+			if (Math.abs(beta) > 90) {
+				DimGroup2.setAttribute('transform', 'rotate (180,' + point1_SysCoor[0] + ', ' + point1_SysCoor[1] + ')');
+				tekstOffset = 8;//smanji text offset ako je rotirana
+				beta_rot = beta- 180;
+			}
+			
+			//dodaj tekst u group1
+			var text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+			text1.setAttribute('x', point1_SysCoor[0] - tekstOffset);
+			text1.setAttribute('y', point1_SysCoor[1]-2);
+			text1.textContent = naziv + value.toString();
+			text1.setAttribute("fill", "red");
+			DimGroup1.appendChild(text1);
+
+			//rotiraj grupu 1
+			DimGroup1.setAttribute('transform', 'rotate (' + (-beta_rot) + ', ' + point1_SysCoor[0] + ', ' + point1_SysCoor[1] + ')');
+		}
+
+		//***************************************************
+		//***posmatra promene cele klase input boxova radi dinamičke
+		//***izmene crteža
+		//***************************************************
+		$('.geometrija').bind('change', function () {
+			generiši_blok();
+		});
 	});
+
+
+
 </script>
 
 
@@ -375,187 +492,191 @@
 <hr>
 	
 @using (Html.BeginForm()) {
+	<fieldset>
 
-	@Html.AntiForgeryToken()
-	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.AntiForgeryToken()
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-	if (@ViewBag.poruka != null) {
+		@if (@ViewBag.poruka != null) {
 		<div style="border: 1px solid red">
 			@ViewBag.poruka
 		</div>
-	}
-	<hr>
-
-	<div class="form-control">
-
-		<h4>Monoblok</h4>
-		<hr />
-
-		@Html.HiddenFor(model => model.mblok1.ID)
-
-		<table class="table table-hover table-bordered">
-			<thead class="thead-dark">
-				<tr>
-					<th>@Html.LabelFor(model => model.mblok1.Naziv) </th>
-					<th><Html.Label class="control-label col-md-2">Naziv Standarda</Html.Label> </th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr>
-					<td>@Html.TextBoxFor(model => model.mblok1.Naziv)</td>
-					<td>@Html.DropDownListFor(model => model.SelectedStandard1, Model.mStand1) </td>
-				</tr>
-			</tbody>
-		</table>
+		}
 		<hr>
 
-		<table>
-			<thead class="thead-dark">
-				<tr>
-					<th colspan="2"><Html.Label class="control-label col-md-2">Geometrija preseka</Html.Label></th>
+		<div class="form-control">
 
-					<th>   </th>
+			<h4>Monoblok</h4>
+			<hr />
 
-					<th colspan="2"><Html.Label class="control-label col-md-2">Mehaničke karakterisitke preseka</Html.Label> </th>
-				</tr>
-			</thead>
+			@Html.HiddenFor(model => model.mblok1.ID)
+			@Html.HiddenFor(model => model.monoGeom1.ID)
+			@Html.HiddenFor(model => model.monoKarakt1.ID)
+			@Html.HiddenFor(model => model.mblok1.ID_tip)
 
-			<tbody>
-				<tr>
-					<td>@Html.LabelFor(model => model.monoGeom1.b)</td>
 
-					<td>@Html.TextBoxFor(model => model.monoGeom1.b, htmlAttributes: new {id = "b_box"})</td>
+			<table class="table table-hover table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>@Html.LabelFor(model => model.mblok1.Naziv) </th>
+						<th><Html.Label class="control-label col-md-2">Naziv Standarda</Html.Label> </th>
+					</tr>
+				</thead>
 
-					<td> | </td>
+				<tbody>
+					<tr>
+						<td>@Html.TextBoxFor(model => model.mblok1.Naziv)</td>
+						<td>@Html.DropDownListFor(model => model.SelectedStandard1, Model.mStand1) </td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.A)</td>
+			<table>
+				<thead class="thead-dark">
+					<tr>
+						<th colspan="2"><Html.Label class="control-label col-md-2">Geometrija preseka</Html.Label></th>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.A)</td>
-				</tr>
+						<th>   </th>
 
-				<tr>
-					<td>@Html.LabelFor(model => model.monoGeom1.h)</td>
+						<th colspan="2"><Html.Label class="control-label col-md-2">Mehaničke karakterisitke preseka</Html.Label> </th>
+					</tr>
+				</thead>
 
-					<td>@Html.TextBoxFor(model => model.monoGeom1.h, htmlAttributes: new { id = "h_box" })</td>
+				<tbody>
+					<tr>
+						<td>@Html.LabelFor(model => model.monoGeom1.b)</td>
 
-					<td> | </td>
+						<td>@Html.TextBoxFor(model => model.monoGeom1.b, htmlAttributes: new { id = "b_box", @class = "geometrija" })</td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.G)</td>
+						<td> | </td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.G)</td>
-				</tr>
+						<td>@Html.LabelFor(model => model.monoKarakt1.A)</td>
 
-				<tr>
-					<td>@Html.LabelFor(model => model.monoGeom1.s)</td>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.A)</td>
+					</tr>
 
-					<td>@Html.TextBoxFor(model => model.monoGeom1.s, htmlAttributes: new { id = "s_box" })</td>
+					<tr>
+						<td>@Html.LabelFor(model => model.monoGeom1.h)</td>
 
-					<td> | </td>
+						<td>@Html.TextBoxFor(model => model.monoGeom1.h, htmlAttributes: new { id = "h_box", @class = "geometrija" })</td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.Ix)</td>
+						<td> | </td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.Ix)</td>
-				</tr>
+						<td>@Html.LabelFor(model => model.monoKarakt1.G)</td>
 
-				<tr>
-					<td>@Html.LabelFor(model => model.monoGeom1.t)</td>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.G)</td>
+					</tr>
 
-					<td>@Html.TextBoxFor(model => model.monoGeom1.t, htmlAttributes: new { id = "t_box" })</td>
+					<tr>
+						<td>@Html.LabelFor(model => model.monoGeom1.s)</td>
 
-					<td> | </td>
+						<td>@Html.TextBoxFor(model => model.monoGeom1.s, htmlAttributes: new { id = "s_box", @class = "geometrija" })</td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.Wx)</td>
+						<td> | </td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.Wx)</td>
-				</tr>
+						<td>@Html.LabelFor(model => model.monoKarakt1.Ix)</td>
 
-				<tr>
-					<td>@Html.LabelFor(model => model.monoGeom1.r1)</td>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.Ix)</td>
+					</tr>
 
-					<td>@Html.TextBoxFor(model => model.monoGeom1.r1, htmlAttributes: new { id = "r1_box" })</td>
+					<tr>
+						<td>@Html.LabelFor(model => model.monoGeom1.t)</td>
 
-					<td> | </td>
+						<td>@Html.TextBoxFor(model => model.monoGeom1.t, htmlAttributes: new { id = "t_box", @class = "geometrija" })</td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.ix_jez)</td>
+						<td> | </td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.ix_jez)</td>
-				</tr>
+						<td>@Html.LabelFor(model => model.monoKarakt1.Wx)</td>
 
-				<tr>
-					<td>@Html.LabelFor(model => model.monoGeom1.r2)</td>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.Wx)</td>
+					</tr>
 
-					<td>@Html.TextBoxFor(model => model.monoGeom1.r2, htmlAttributes: new { id = "r2_box" })</td>
+					<tr>
+						<td>@Html.LabelFor(model => model.monoGeom1.r1)</td>
 
-					<td> | </td>
+						<td>@Html.TextBoxFor(model => model.monoGeom1.r1, htmlAttributes: new { id = "r1_box", @class = "geometrija" })</td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.Iy)</td>
+						<td> | </td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.Iy)</td>
-				</tr>
+						<td>@Html.LabelFor(model => model.monoKarakt1.ix_jez)</td>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td> | </td>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.ix_jez)</td>
+					</tr>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.Wy)</td>
+					<tr>
+						<td>@Html.LabelFor(model => model.monoGeom1.r2)</td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.Wy)</td>
-				</tr>
+						<td>@Html.TextBoxFor(model => model.monoGeom1.r2, htmlAttributes: new { id = "r2_box", @class = "geometrija" })</td>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td> | </td>
+						<td> | </td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.iy_jez)</td>
+						<td>@Html.LabelFor(model => model.monoKarakt1.Iy)</td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.iy_jez)</td>
-				</tr>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.Iy)</td>
+					</tr>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td> | </td>
+					<tr>
+						<td></td>
+						<td></td>
+						<td> | </td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.Sx)</td>
+						<td>@Html.LabelFor(model => model.monoKarakt1.Wy)</td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.Sx)</td>
-				</tr>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.Wy)</td>
+					</tr>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td> | </td>
+					<tr>
+						<td></td>
+						<td></td>
+						<td> | </td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.s_x)</td>
+						<td>@Html.LabelFor(model => model.monoKarakt1.iy_jez)</td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.s_x)</td>
-				</tr>
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.iy_jez)</td>
+					</tr>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td> | </td>
+					<tr>
+						<td></td>
+						<td></td>
+						<td> | </td>
 
-					<td>@Html.LabelFor(model => model.monoKarakt1.I_tor)</td>
+						<td>@Html.LabelFor(model => model.monoKarakt1.Sx)</td>
 
-					<td>@Html.TextBoxFor(model => model.monoKarakt1.I_tor)</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<hr>
-}
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.Sx)</td>
+					</tr>
 
-@*<div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-			<input type="submit" value="Save" class="btn btn-default" />
+					<tr>
+						<td></td>
+						<td></td>
+						<td> | </td>
+
+						<td>@Html.LabelFor(model => model.monoKarakt1.s_x)</td>
+
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.s_x)</td>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td> | </td>
+
+						<td>@Html.LabelFor(model => model.monoKarakt1.I_tor)</td>
+
+						<td>@Html.TextBoxFor(model => model.monoKarakt1.I_tor)</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>@Html.ActionLink("Cancel and Back", "MonoblockList", "ProfiliMeni", new { poruka2 = "Blok nije izmenjen" }, new { @class = "btn btn-info btn-sm" })</td>
+						<td>
+							<input type="submit" value="Save" class="btn btn-info btn-sm" />
+						</td>
+					</tr>
+				</tfoot>
+
+			</table>
 		</div>
-	</div>*@
-
-
-@*<div>
-		@Html.ActionLink("Back to List", "Index")
-	</div>*@
+		<hr>
+	</fieldset>
+}

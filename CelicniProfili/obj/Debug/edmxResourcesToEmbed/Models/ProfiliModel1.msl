@@ -32,17 +32,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="mon_opis">
-      <EntityTypeMapping TypeName="ČeličniProfiliModel.mon_opis">
-        <MappingFragment StoreEntitySet="mon_opis">
-          <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
-          <ScalarProperty Name="No_node" ColumnName="No_node" />
-          <ScalarProperty Name="Node_x" ColumnName="Node_x" />
-          <ScalarProperty Name="Node_y" ColumnName="Node_y" />
-          <ScalarProperty Name="index_pr" ColumnName="index_pr" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Monoblok">
       <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
         <MappingFragment StoreEntitySet="Monoblok">
@@ -50,18 +39,6 @@
           <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
           <ScalarProperty Name="Naziv" ColumnName="Naziv" />
           <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="monoblok_pozicije_ojačanja">
-      <EntityTypeMapping TypeName="ČeličniProfiliModel.monoblok_pozicije_ojačanja">
-        <MappingFragment StoreEntitySet="monoblok_pozicije_ojačanja">
-          <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
-          <ScalarProperty Name="X_pos" ColumnName="X_pos" />
-          <ScalarProperty Name="Y_pos" ColumnName="Y_pos" />
-          <ScalarProperty Name="br_segment" ColumnName="br_segment" />
-          <ScalarProperty Name="pravac" ColumnName="pravac" />
-          <ScalarProperty Name="index_pr" ColumnName="index_pr" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

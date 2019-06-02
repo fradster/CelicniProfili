@@ -179,12 +179,6 @@
     <Compile Include="Models\Monoblok.cs">
       <DependentUpon>ProfiliModel1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\monoblok_pozicije_ojačanja.cs">
-      <DependentUpon>ProfiliModel1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\mon_opis.cs">
-      <DependentUpon>ProfiliModel1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ojačanje_opis.cs">
       <DependentUpon>ProfiliModel1.tt</DependentUpon>
     </Compile>

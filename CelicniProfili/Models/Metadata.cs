@@ -78,21 +78,6 @@ namespace CelicniProfili.Models {
 		public string Naziv { get; set; }
 	}
 
-	public class monoblok_pozicije_ojačanjaMetadata {
-		[Required]
-		public int ID_mono { get; set; }
-		[Required]
-		public double X_pos { get; set; }
-		[Required]
-		public double Y_pos { get; set; }
-		[Required]
-		public int br_segment { get; set; }
-		[Required]
-		public string pravac { get; set; }
-		[Required]
-		public int index_pr { get; set; }
-	}
-
 	public class ojačanje_opisMetadata {
 		[Required]
 		public int Id_ojač { get; set; }
@@ -142,14 +127,6 @@ namespace CelicniProfili.Models {
 		public double s_x { get; set; }
 		[Required]
 		public double I_tor { get; set; }
-	}
-
-	public class mon_opisMetadata {
-		public int ID_mono { get; set; }
-		public int No_node { get; set; }
-		public double Node_x { get; set; }
-		public double Node_y { get; set; }
-		public int index_pr { get; set; }
 	}
 
 	public class tip_monoblokMetadata {

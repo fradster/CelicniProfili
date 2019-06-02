@@ -43,16 +43,6 @@
           <Property Name="s_x" Type="float" Nullable="false" />
           <Property Name="I_tor" Type="float" Nullable="false" />
         </EntityType>
-        <EntityType Name="mon_opis">
-          <Key>
-            <PropertyRef Name="index_pr" />
-          </Key>
-          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_mono" Type="int" Nullable="false" />
-          <Property Name="No_node" Type="int" Nullable="false" />
-          <Property Name="Node_x" Type="float" Nullable="false" />
-          <Property Name="Node_y" Type="float" Nullable="false" />
-        </EntityType>
         <EntityType Name="Monoblok">
           <Key>
             <PropertyRef Name="ID" />
@@ -61,17 +51,6 @@
           <Property Name="ID_standard" Type="int" Nullable="false" />
           <Property Name="Naziv" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="ID_tip" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="monoblok_pozicije_ojačanja">
-          <Key>
-            <PropertyRef Name="index_pr" />
-          </Key>
-          <Property Name="index_pr" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_mono" Type="int" Nullable="false" />
-          <Property Name="X_pos" Type="float" Nullable="false" />
-          <Property Name="Y_pos" Type="float" Nullable="false" />
-          <Property Name="br_segment" Type="int" Nullable="false" />
-          <Property Name="pravac" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="ojačanje_opis">
           <Key>
@@ -187,18 +166,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Monoblok__ID_tip__3F466844">
-          <End Role="tip monoblok" Type="Self.tip monoblok" Multiplicity="1" />
-          <End Role="Monoblok" Type="Self.Monoblok" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tip monoblok">
-              <PropertyRef Name="id_tip" />
-            </Principal>
-            <Dependent Role="Monoblok">
-              <PropertyRef Name="ID_tip" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__profil__ID__5070F446">
           <End Role="Profil_I-karakteristike" Type="Self.Profil_I-karakteristike" Multiplicity="1" />
           <End Role="profil" Type="Self.profil" Multiplicity="0..1" />
@@ -223,25 +190,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tip monob__id_te__6E01572D">
-          <End Role="tehnologija monoblok" Type="Self.tehnologija monoblok" Multiplicity="1" />
-          <End Role="tip monoblok" Type="Self.tip monoblok" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tehnologija monoblok">
-              <PropertyRef Name="ID_tehn" />
-            </Principal>
-            <Dependent Role="tip monoblok">
-              <PropertyRef Name="id_tehn" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ČeličniProfiliModelStoreContainer">
           <EntitySet Name="Admin SMTP parameteres" EntityType="Self.Admin SMTP parameteres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="I-geometrija" EntityType="Self.I-geometrija" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="I-karakteristike" EntityType="Self.I-karakteristike" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="mon_opis" EntityType="Self.mon_opis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Monoblok" EntityType="Self.Monoblok" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="monoblok_pozicije_ojačanja" EntityType="Self.monoblok_pozicije_ojačanja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ojačanje_opis" EntityType="Self.ojačanje_opis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="profil" EntityType="Self.profil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profil_I-karakteristike" EntityType="Self.Profil_I-karakteristike" Schema="dbo" store:Type="Tables" />
@@ -262,10 +215,6 @@
             <End Role="standard" EntitySet="standard" />
             <End Role="Monoblok" EntitySet="Monoblok" />
           </AssociationSet>
-          <AssociationSet Name="FK__Monoblok__ID_tip__3F466844" Association="Self.FK__Monoblok__ID_tip__3F466844">
-            <End Role="tip monoblok" EntitySet="tip monoblok" />
-            <End Role="Monoblok" EntitySet="Monoblok" />
-          </AssociationSet>
           <AssociationSet Name="FK__profil__ID__5070F446" Association="Self.FK__profil__ID__5070F446">
             <End Role="Profil_I-karakteristike" EntitySet="Profil_I-karakteristike" />
             <End Role="profil" EntitySet="profil" />
@@ -273,10 +222,6 @@
           <AssociationSet Name="FK__profil__ID_monob__398D8EEE" Association="Self.FK__profil__ID_monob__398D8EEE">
             <End Role="Monoblok" EntitySet="Monoblok" />
             <End Role="profil" EntitySet="profil" />
-          </AssociationSet>
-          <AssociationSet Name="FK__tip monob__id_te__6E01572D" Association="Self.FK__tip monob__id_te__6E01572D">
-            <End Role="tehnologija monoblok" EntitySet="tehnologija monoblok" />
-            <End Role="tip monoblok" EntitySet="tip monoblok" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -314,16 +259,6 @@
           <Property Name="I_tor" Type="Double" Nullable="false" />
           <NavigationProperty Name="Monoblok" Relationship="Self.FK__Monoblok__ID__44FF419A" FromRole="I_karakteristike" ToRole="Monoblok" />
         </EntityType>
-        <EntityType Name="mon_opis">
-          <Key>
-            <PropertyRef Name="index_pr" />
-          </Key>
-          <Property Name="ID_mono" Type="Int32" Nullable="false" />
-          <Property Name="No_node" Type="Int32" Nullable="false" />
-          <Property Name="Node_x" Type="Double" Nullable="false" />
-          <Property Name="Node_y" Type="Double" Nullable="false" />
-          <Property Name="index_pr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="Monoblok">
           <Key>
             <PropertyRef Name="ID" />
@@ -336,18 +271,6 @@
           <NavigationProperty Name="I_karakteristike" Relationship="Self.FK__Monoblok__ID__44FF419A" FromRole="Monoblok" ToRole="I_karakteristike" />
           <NavigationProperty Name="standard" Relationship="Self.FK__Monoblok__ID_sta__3F466844" FromRole="Monoblok" ToRole="standard" />
           <NavigationProperty Name="profil" Relationship="Self.FK__profil__ID_monob__398D8EEE" FromRole="Monoblok" ToRole="profil" />
-          <NavigationProperty Name="tip_monoblok" Relationship="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844" FromRole="Monoblok" ToRole="tip_monoblok" />
-        </EntityType>
-        <EntityType Name="monoblok_pozicije_ojačanja">
-          <Key>
-            <PropertyRef Name="index_pr" />
-          </Key>
-          <Property Name="ID_mono" Type="Int32" Nullable="false" />
-          <Property Name="X_pos" Type="Double" Nullable="false" />
-          <Property Name="Y_pos" Type="Double" Nullable="false" />
-          <Property Name="br_segment" Type="Int32" Nullable="false" />
-          <Property Name="pravac" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="index_pr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="ojačanje_opis">
           <Key>
@@ -479,9 +402,7 @@
         <EntityContainer Name="ČeličniProfiliEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="I_geometrija" EntityType="Self.I_geometrija" />
           <EntitySet Name="I_karakteristike" EntityType="Self.I_karakteristike" />
-          <EntitySet Name="mon_opis" EntityType="Self.mon_opis" />
           <EntitySet Name="Monoblok" EntityType="Self.Monoblok" />
-          <EntitySet Name="monoblok_pozicije_ojačanja" EntityType="Self.monoblok_pozicije_ojačanja" />
           <EntitySet Name="ojačanje_opis" EntityType="Self.ojačanje_opis" />
           <EntitySet Name="profil" EntityType="Self.profil" />
           <EntitySet Name="Profil_I_karakteristike" EntityType="Self.Profil_I_karakteristike" />
@@ -511,10 +432,6 @@
           <EntitySet Name="Admin_SMTP_parameteres" EntityType="ČeličniProfiliModel.Admin_SMTP_parameteres" />
           <EntitySet Name="tehnologija_monoblok" EntityType="ČeličniProfiliModel.tehnologija_monoblok" />
           <EntitySet Name="tip_monoblok" EntityType="ČeličniProfiliModel.tip_monoblok" />
-          <AssociationSet Name="FK__Monoblok__ID_tip__3F466844" Association="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844">
-            <End Role="tip_monoblok" EntitySet="tip_monoblok" />
-            <End Role="Monoblok" EntitySet="Monoblok" />
-          </AssociationSet>
           <AssociationSet Name="FK__tip_monob__id_te__6E01572D" Association="ČeličniProfiliModel.FK__tip_monob__id_te__6E01572D">
             <End Role="tehnologija_monoblok" EntitySet="tehnologija_monoblok" />
             <End Role="tip_monoblok" EntitySet="tip_monoblok" />
@@ -543,22 +460,9 @@
           </Key>
           <Property Name="id_tip" Type="Int32" Nullable="false" />
           <Property Name="tip" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Monoblok" Relationship="ČeličniProfiliModel.FK__Monoblok__ID_tip__3F466844" FromRole="tip_monoblok" ToRole="Monoblok" />
           <Property Name="id_tehn" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tehnologija_monoblok" Relationship="ČeličniProfiliModel.FK__tip_monob__id_te__6E01572D" FromRole="tip_monoblok" ToRole="tehnologija_monoblok" />
         </EntityType>
-        <Association Name="FK__Monoblok__ID_tip__3F466844">
-          <End Type="ČeličniProfiliModel.tip_monoblok" Role="tip_monoblok" Multiplicity="1" />
-          <End Type="ČeličniProfiliModel.Monoblok" Role="Monoblok" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tip_monoblok">
-              <PropertyRef Name="id_tip" />
-            </Principal>
-            <Dependent Role="Monoblok">
-              <PropertyRef Name="ID_tip" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__tip_monob__id_te__6E01572D">
           <End Type="ČeličniProfiliModel.tehnologija_monoblok" Role="tehnologija_monoblok" Multiplicity="1" />
           <End Type="ČeličniProfiliModel.tip_monoblok" Role="tip_monoblok" Multiplicity="*" />
@@ -608,17 +512,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="mon_opis">
-            <EntityTypeMapping TypeName="ČeličniProfiliModel.mon_opis">
-              <MappingFragment StoreEntitySet="mon_opis">
-                <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
-                <ScalarProperty Name="No_node" ColumnName="No_node" />
-                <ScalarProperty Name="Node_x" ColumnName="Node_x" />
-                <ScalarProperty Name="Node_y" ColumnName="Node_y" />
-                <ScalarProperty Name="index_pr" ColumnName="index_pr" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Monoblok">
             <EntityTypeMapping TypeName="ČeličniProfiliModel.Monoblok">
               <MappingFragment StoreEntitySet="Monoblok">
@@ -626,18 +519,6 @@
                 <ScalarProperty Name="ID_standard" ColumnName="ID_standard" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="ID_tip" ColumnName="ID_tip" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="monoblok_pozicije_ojačanja">
-            <EntityTypeMapping TypeName="ČeličniProfiliModel.monoblok_pozicije_ojačanja">
-              <MappingFragment StoreEntitySet="monoblok_pozicije_ojačanja">
-                <ScalarProperty Name="ID_mono" ColumnName="ID_mono" />
-                <ScalarProperty Name="X_pos" ColumnName="X_pos" />
-                <ScalarProperty Name="Y_pos" ColumnName="Y_pos" />
-                <ScalarProperty Name="br_segment" ColumnName="br_segment" />
-                <ScalarProperty Name="pravac" ColumnName="pravac" />
-                <ScalarProperty Name="index_pr" ColumnName="index_pr" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

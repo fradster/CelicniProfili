@@ -21,11 +21,10 @@ namespace CelicniProfili.ViewModels
 
 		public int SelectedStandard1 { get; set; }
 
-		public List<monoblok_pozicije_ojačanja> pozicOjač1 { get; set; }
+		//public List<monoblok_pozicije_ojačanja> pozicOjač1 { get; set; }
 
-		//private DbSet<mon_opis> opis_table1 { get; set; }
-		private List<mon_opis> opis_table1;
-		public double[,] monOpis1 { get; set; }
+		//private List<mon_opis> opis_table1;
+		//public double[,] monOpis1 { get; set; }
 
 
 		//**************************
@@ -56,22 +55,13 @@ namespace CelicniProfili.ViewModels
 				SelectedStandard1 = Convert.ToInt32(mStand1.Where(x => x.Selected).FirstOrDefault().Value );
 
 				this.mblok1.ID_standard = SelectedStandard1;
-
-				this.pozicOjač1 = db.monoblok_pozicije_ojačanja.Where(x => x.ID_mono == Id_mono).ToList();
-
-				//vadi tabelu iz mon_opis i izdvaja array koordinata
-				
-				
-				opis_table1  = db.mon_opis.Where(x => x.ID_mono == Id_mono).ToList ();
-
-				int br_rows = opis_table1.Count();
-				this.monOpis1 = new double[br_rows, 2];
-
-				for (int i1 = 0; i1< br_rows; i1++) {
-					this.monOpis1 [i1, 0] = opis_table1.ElementAt(i1).Node_x;
-					this.monOpis1 [i1, 1] = opis_table1.ElementAt(i1).Node_y;
-				}
 			}
+		}
+
+		//*******************
+		//prazan konstruktor
+		//*******************
+		public modelMonoblokZaEdit () {
 		}
 	}
 }

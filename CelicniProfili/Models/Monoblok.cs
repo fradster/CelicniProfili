@@ -30,6 +30,5 @@ namespace CelicniProfili.Models
         public virtual standard standard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<profil> profil { get; set; }
-        public virtual tip_monoblok tip_monoblok { get; set; }
     }
 }
