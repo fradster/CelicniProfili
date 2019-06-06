@@ -696,16 +696,12 @@ namespace CelicniProfili.Controllers{
 		[HttpPost]
 		public ActionResult About (string Id) {
 			if (Id != null) {
-				using (ČeličniProfiliEntities db = new ČeličniProfiliEntities()) {
-
-					Id.Trim();
-					Users usr1 = db.Users.Where(x => x.Name.Equals(Id)).FirstOrDefault();
-					if (usr1 != null) {
-						string pass1 = encrypt.encryptPass(usr1.pass);
-						return View((object) pass1);
-					}
-					else
-						ViewBag.poruka = "Nema tog usera";
+				
+				Id.Trim();
+				
+				if (Id != String.Empty) {
+					string pass1 = encrypt.encryptPass(Id);
+					return View((object) pass1);
 				}
 			}
 			return View();
