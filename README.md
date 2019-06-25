@@ -21,5 +21,5 @@ Korišćene tehnlogije i bibioteke:
 	- .NET ASP MVC
 	- SQL
 	- Entity framework
-	- MailKit
-	- SVG + javascript
+	- JS
+	- SVG
