@@ -36,7 +36,7 @@
 						@{//ostali linkovi idu u meni koji se sakriva kod smanjenja stranice
 							if (Visibles.Length > 1) {
 								for (int i1 = 2; i1 <= Visibles.Length; i1++) {
-								<li>@Html.ActionLink(UsersController.ActionNames[Visibles[i1 - 1] - 1], UsersController.ActionList[Visibles[i1 - 1] - 1], "Users")</li>
+									<li>@Html.ActionLink(UsersController.ActionNames[Visibles[i1 - 1] - 1], UsersController.ActionList[Visibles[i1 - 1] - 1], "Users")</li>
 								}
 							}
 						}
